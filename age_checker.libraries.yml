@@ -1,4 +1,8 @@
-age-checker:
+age_checker.admin:
   version: VERSION
   js:
     js/age-checker.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
