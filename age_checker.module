@@ -1,0 +1,12 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use \Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_page_attachments().
+ */
+function age_checker_page_attachments(array &$attachments) {
+
+  $attachments['#attached']['library'][] = 'js/age-checker';
+}

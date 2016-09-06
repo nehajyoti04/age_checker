@@ -1,0 +1,4 @@
+age-checker:
+  version: VERSION
+  js:
+    js/age-checker.js: {}

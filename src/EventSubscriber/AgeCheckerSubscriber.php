@@ -38,7 +38,7 @@ public function AgeCheckerSubscriberLoad(GetResponseEvent $event) {
   $age_gate_cookie = isset($_COOKIE['age_checker']) ? $_COOKIE['age_checker'] : 0;
   $remember_me_cookie = isset($_COOKIE['remember_me']) ? $_COOKIE['remember_me'] : 0;
 
-  if ($user->uid > 0) {
+  if ($user->id() > 0) {
     setcookie('age_checker', 1, 0, $GLOBALS['base_path'], NULL, FALSE, TRUE);
   }
 
