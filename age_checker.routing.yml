@@ -4,7 +4,7 @@ age_checker.admin_config:
     _form: '\Drupal\age_checker\Form\AgeCheckerSettingsForm'
     _title: 'Age Checker Settings'
   requirements:
-    _permission: 'dminister age checker settings'
+    _permission: 'administer age checker settings'
 
 
 
