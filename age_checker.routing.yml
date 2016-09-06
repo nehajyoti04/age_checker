@@ -6,5 +6,18 @@ age_checker.admin_config:
   requirements:
     _permission: 'administer age checker settings'
 
+age_checker.mapping:
+  path: '/admin/config/people/age_checker/mapping'
+  defaults:
+    _form: '\Drupal\age_checker\Form\AgeCheckerMappingAdminForm'
+    _title: 'Language and Country Mapping'
+  requirements:
+    _permission: 'administer age checker settings'
 
-
+age_checker.country_config:
+  path: '/admin/config/people/age_checker/country_configuration'
+  defaults:
+    _form: '\Drupal\age_checker\Form\AgeCheckerCountryConfig'
+    _title: 'Country Configuration'
+  requirements:
+    _permission: 'administer age checker settings'
