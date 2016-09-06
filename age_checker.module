@@ -12,3 +12,46 @@ $attachments['#attached']['library'][] = 'js/age_checker';
   // $attachments['#attached']['library'][] = array('age_checker', 'admin');
   // $form['#attached']['library'][] = array('webform', 'admin');
 }
+
+///**
+// * Get the country name for Age Gate.
+// */
+//function age_checker_get_country_name() {
+//
+//  // Get the country code.
+//  $country_code = age_checker_get_country_code();
+//
+//  // Get the default country.
+//  $default_country = \Drupal::state(('age_checker_default_country');
+//
+//  $countries = \Drupal::state(('age_checker_countries', '');
+//  $countries = explode("\n", $countries);
+//  foreach ($countries as $country) {
+//    $country_array = explode('|', $country);
+//    if (trim($country_array[0]) == $country_code) {
+//      $country_name = $country_code;
+//      break;
+//    }
+//    else {
+//      $country_name = $default_country;
+//    }
+//  }
+//  return $country_name;
+//}
+//
+///**
+// * Get the country code.
+// */
+//function age_checker_get_country_code() {
+////  $ip_address = ip_address();
+////  $url = \Drupal::state('age_checker_country_code_url') . $ip_address;
+////  $geoip_data = age_checker_get_geoip_data($url);
+//
+//  if (is_array($geoip_data)) {
+//    $country_code = $geoip_data['country']['code'];
+//  }
+//  else {
+//    $country_code = \Drupal::state('age_checker_default_country');
+//  }
+//  return $country_code;
+//}
