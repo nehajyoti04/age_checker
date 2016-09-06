@@ -1,0 +1,10 @@
+age_checker.admin_config:
+  path: '/admin/config/people/age-checker'
+  defaults:
+    _form: '\Drupal\age_checker\Form\AgeCheckerSettingsForm'
+    _title: 'Age Checker Settings'
+  requirements:
+    _permission: 'dminister age checker settings'
+
+
+
