@@ -12,8 +12,6 @@ var age_checker = {};
         attach: function (context, settings) {
             $(document).ready(function () {
 
-                alert("hello1");
-
                 var agegate_bg = $('.age-checker-bg img').attr('src');
                 $('#age_checker').css('background-image', 'url(' + agegate_bg + ')');
                 $('.age-checker-bg').remove();

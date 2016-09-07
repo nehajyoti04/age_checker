@@ -11,6 +11,7 @@ use Drupal\Core\Datetime\Date;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
+use Drupal\Core\Url;
 
 class AgeCheckerSettingsForm extends ConfigFormBase {
   public function getFormId() {
@@ -68,13 +69,25 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
       '#collapsible'   => TRUE,
       '#collapsed'     => TRUE,
     );
+
+    $url = Url::fromUri('http://www.worldatlas.com/aatlas/ctycodes.htm');
+    $link_options = array(
+      'attributes' => array(
+        'class' => array(
+          'sample_link',
+        ),
+      ),
+    );
+    $url->setOptions($link_options);
+    $link = \Drupal::l(t('http://www.worldatlas.com/aatlas/ctycodes.htm'), $url);
+
     $form['country']['age_checker_countries'] = array(
       '#type' => 'textarea',
       '#title' => t('Please enter the list of countries in key|value pair.'),
       '#required' => TRUE,
       '#maxlength' => 255,
       '#default_value' => $config->get('age_checker_countries', ''),
-//      '#description' => t('Please enter required country in localized language e.g. ES|España. The key should be picked up from A2 (ISO) column of') . l(t('http://www.worldatlas.com/aatlas/ctycodes.htm'), 'http://www.worldatlas.com/aatlas/ctycodes.htm', array('attributes' => array('class' => 'sample_link'))) . t('site depending on the value of the country.'),
+      '#description' => t('Please enter required country in localized language e.g. ES|España. The key should be picked up from A2 (ISO) column of ') . $link . t(' site depending on the value of the country.'),
     );
 
     // Verification options for age checker.
