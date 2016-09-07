@@ -18,9 +18,11 @@ $attachments['#attached']['library'][] = 'js/age_checker';
  */
 function age_checker_get_country_name() {
 
-//  // Get the country code.
-//  $country_code = age_checker_get_country_code();
-//
+  // Get the country code.
+  dpm("inside age checker function");
+  $country_code = age_checker_get_country_code();
+  dpm("country code");
+  dpm($country_code);exit;
 //  // Get the default country.
 //  $default_country = \Drupal::state(('age_checker_default_country');
 //
@@ -38,14 +40,18 @@ function age_checker_get_country_name() {
 //  }
 //  return $country_name;
 }
-//
-///**
-// * Get the country code.
-// */
-//function age_checker_get_country_code() {
-////  $ip_address = ip_address();
-////  $url = \Drupal::state('age_checker_country_code_url') . $ip_address;
-////  $geoip_data = age_checker_get_geoip_data($url);
+
+/**
+ * Get the country code.
+ */
+function age_checker_get_country_code() {
+  dpm("inside age_checker_get_country_code");
+//  $ip_address = ip_address();
+//  $ip_address = Drupal\age_checker\EventSubscriber\AgeCheckerSubscriber::_get_ip_address();
+//  dpm("ip address");exit;
+//  dpm($ip_address);exit;
+//  $url = \Drupal::state('age_checker_country_code_url') . $ip_address;
+//  $geoip_data = age_checker_get_geoip_data($url);
 //
 //  if (is_array($geoip_data)) {
 //    $country_code = $geoip_data['country']['code'];
@@ -54,4 +60,4 @@ function age_checker_get_country_name() {
 //    $country_code = \Drupal::state('age_checker_default_country');
 //  }
 //  return $country_code;
-//}
+}

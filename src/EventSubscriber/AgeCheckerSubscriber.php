@@ -13,11 +13,43 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\Core\DrupalKernel;
 use Symfony\Component\HttpFoundation\Request;
-
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Form\FormBase;
+use Drupal\ban\BanIpManagerInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
 * Provides a MyModuleSubscriber.
 */
 class AgeCheckerSubscriber implements EventSubscriberInterface {
+
+
+//  protected $request;
+
+//  public static function create(ContainerInterface $container) {
+//    return new static(
+//      $container->get('age_checker.subscriber')
+//    );
+//  }
+
+  /**
+   * Constructs a Foo object.
+   *
+   * @param Symfony\Component\HttpFoundation\Request $request
+   *   The request object.
+   */
+//  public function __construct(Request $request) {
+//    $this->request = $request;
+//  }
+
+//  public function _get_ip_address() {
+//    return $this->getRequest()->getClientIP();
+////    return $this->request->getClientIp();
+////    if ($ip == $this->request->getClientIp()) {
+////      drupal_set_message('ip', t('You may not ban your own IP address.'));
+////    }
+//  }
 
 /**
 * // only if KernelEvents::REQUEST !!!

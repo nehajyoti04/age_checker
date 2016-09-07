@@ -192,7 +192,6 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
       $language = explode('|', $language);
       $language = array_map('trim', $language);
       $language = $language[0];
-
       $this->config('age_checker_mapping.settings')
         ->set('age_checker_' . $language . '_select_list_label', $form_state->getValues()['age_checker_' . $language . '_select_list_label'])
         ->set('age_checker_' . $language . '_country_list', $form_state->getValues()['age_checker_' . $language . '_country_list'])

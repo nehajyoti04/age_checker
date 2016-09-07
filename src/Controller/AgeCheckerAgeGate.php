@@ -58,9 +58,10 @@ class AgeCheckerAgeGate extends ControllerBase {
       $languages_options[$language[0]] = isset($language) ? $language[1] : NULL;
     }
 
+    dpm("function call");
+    dpm(age_checker_get_country_name());
     $selected_country = isset($_COOKIE['country_selected']) ? $_COOKIE['country_selected'] : age_checker_get_country_name();
-    dpm("selected country");
-    dpm($selected_country);
+
     foreach ($languages_options as $key => $value) {
       $countries_array = \Drupal::state()->get('age_checker_' . $key . '_country_list');
       foreach ($countries_array as $country) {
