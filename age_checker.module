@@ -13,7 +13,7 @@ use Drupal\Core\Form\ConfigFormBase;
 /**
  * Implements hook_page_attachments().
  */
-function age_checker_page_attachments_alter(array &$attachments) {
+function age_checker_page_attachments(array &$attachments) {
 
 //$attachments['#attached']['library'][] = 'js/age_checker';
   $attachments['#attached']['library'][] = 'age_checker/age_checker.admin';
