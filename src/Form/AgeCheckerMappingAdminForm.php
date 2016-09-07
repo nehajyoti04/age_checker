@@ -27,8 +27,9 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
     $config = $this->config('age_checker_mapping.settings');
 
     $form = array();
-    $languages = $config->get('age_checker_language', 'Please provide values');
+    $languages = \Drupal::state()->get('age_checker_language', 'Please provide values');
     $languages = explode("\n", $languages);
+
     foreach ($languages as $language) {
       $language = explode('|', $language);
       $language = array_map('trim', $language);
@@ -41,7 +42,7 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
       $language = $language[0];
 
       // Field for selecting the country for a particular language.
-      $countries = $config->get('age_checker_countries', '');
+      $countries = \Drupal::state()->get('age_checker_countries', '');
       $countries = explode("\n", $countries);
       $country_options = array();
       $country_options[0] = 'Select the Country';
@@ -184,10 +185,33 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $config = $this->config('age_checker_mapping.settings');
+    $languages = \Drupal::state()->get('age_checker_language', 'Please provide values');
+    $languages = explode("\n", $languages);
+    foreach ($languages as $language) {
+      $language = explode('|', $language);
+      $language = array_map('trim', $language);
+      $language = $language[0];
+
+      $this->config('age_checker_mapping.settings')
+        ->set('age_checker_' . $language . '_select_list_label', $form_state->getValues()['age_checker_' . $language . '_select_list_label'])
+        ->set('age_checker_' . $language . '_country_list', $form_state->getValues()['age_checker_' . $language . '_country_list'])
+        ->set('age_checker_' . $language . '_age_gate_header', $form_state->getValues()['age_checker_' . $language . '_age_gate_header'])
+        ->set('age_checker_' . $language . '_age_gate_footer', $form_state->getValues()['age_checker_' . $language . '_age_gate_footer'])
+        ->set('age_checker_' . $language . '_blank_error_msg', $form_state->getValues()['age_checker_' . $language . '_blank_error_msg'])
+        ->set('age_checker_' . $language . '_dateformat_error_msg', $form_state->getValues()['age_checker_' . $language . '_dateformat_error_msg'])
+        ->set('age_checker_' . $language . '_daterange_error_msg', $form_state->getValues()['age_checker_' . $language . '_daterange_error_msg'])
+        ->set('age_checker_' . $language . '_underage_error_msg', $form_state->getValues()['age_checker_' . $language . '_underage_error_msg'])
+        ->set('age_checker_' . $language . '_remember_me_text', $form_state->getValues()['age_checker_' . $language . '_remember_me_text'])
+        ->set('age_checker_' . $language . '_button_text', $form_state->getValues()['age_checker_' . $language . '_button_text'])
+        ->set('age_checker_' . $language . '_footer_links', $form_state->getValues()['age_checker_' . $language . '_footer_links'])
+        ->set('age_checker_' . $language . '_copyright', $form_state->getValues()['age_checker_' . $language . '_copyright'])
+        ->save();
+
+    }
+
     // Set values in variables.
-//    $this->config('age_calculator.settings')
-//      ->set('age_calculator_output', $form_state->getValues()['age_calculator_output'])
-//      ->save();
+
     parent::submitForm($form, $form_state);
   }
 }

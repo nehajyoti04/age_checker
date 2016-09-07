@@ -164,9 +164,22 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Set values in variables.
-//    $this->config('age_calculator.settings')
-//      ->set('age_calculator_output', $form_state->getValues()['age_calculator_output'])
-//      ->save();
+
+    \Drupal::state()->set('age_checker_language', $form_state->getValues()['age_checker_language']);
+    \Drupal::state()->set('age_checker_countries', $form_state->getValues()['age_checker_countries']);
+
+    $this->config('age_checker.settings')
+      ->set('age_checker_option_remember_me', $form_state->getValues()['age_checker_option_remember_me'])
+      ->set('age_checker_country_code_url', $form_state->getValues()['age_checker_country_code_url'])
+      ->set('age_checker_language', $form_state->getValues()['age_checker_language'])
+      ->set('age_checker_countries', $form_state->getValues()['age_checker_countries'])
+      ->set('age_checker_cookie_expiration_time', $form_state->getValues()['age_checker_cookie_expiration_time'])
+      ->set('age_checker_under_age_url', $form_state->getValues()['age_checker_under_age_url'])
+      ->set('age_checker_visibility', $form_state->getValues()['age_checker_visibility'])
+      ->set('age_checker_pages', $form_state->getValues()['age_checker_pages'])
+      ->set('age_checker_background_image', $form_state->getValues()['age_checker_background_image'])
+      ->set('age_checker_logo', $form_state->getValues()['age_checker_logo'])
+      ->save();
     parent::submitForm($form, $form_state);
   }
 }

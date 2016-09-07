@@ -15,8 +15,10 @@ class AgeCheckerAgeGate extends ControllerBase {
 
     // Getting the language Code.
     $language_code = $this->age_checker_get_language_code();
-//
-//    // Header text of the form.
+
+    dpm("language code");
+    dpm($language_code); exit;
+    // Header text of the form.
 //    $age_checker_header_message_array = \Drupal::state()
 //      ->get('age_checker_' . $language_code . '_age_gate_header');
 //    $age_checker_header_message = $age_checker_header_message_array['value'];
@@ -45,6 +47,7 @@ class AgeCheckerAgeGate extends ControllerBase {
   public function age_checker_get_language_code() {
 
     $languages_options = array();
+    $countries_array = array();
     $languages = \Drupal::state()->get('age_checker_language', '');
     $languages = explode("\n", $languages);
 
@@ -52,19 +55,20 @@ class AgeCheckerAgeGate extends ControllerBase {
       $language = explode('|', $language);
       $language = array_map('trim', $language);
 
-//      $languages_options[$language[0]] = if(isset($language)) ? $language[1] : NULL;
+      $languages_options[$language[0]] = isset($language) ? $language[1] : NULL;
     }
 
-//    $selected_country = isset($_COOKIE['country_selected']) ? $_COOKIE['country_selected'] : age_checker_get_country_name();
-
-//    foreach ($languages_options as $key => $value) {
-//      $countries_array = \Drupal::state()->get('age_checker_' . $key . '_country_list');
-//      foreach ($countries_array as $country) {
-//        if ($country == $selected_country) {
-//          return $key;
-//        }
-//      }
-//    }
+    $selected_country = isset($_COOKIE['country_selected']) ? $_COOKIE['country_selected'] : age_checker_get_country_name();
+    dpm("selected country");
+    dpm($selected_country);
+    foreach ($languages_options as $key => $value) {
+      $countries_array = \Drupal::state()->get('age_checker_' . $key . '_country_list');
+      foreach ($countries_array as $country) {
+        if ($country == $selected_country) {
+          return $key;
+        }
+      }
+    }
     return "hello";
   }
 
