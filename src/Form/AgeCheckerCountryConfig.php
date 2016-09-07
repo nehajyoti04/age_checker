@@ -59,20 +59,20 @@ class AgeCheckerCountryConfig extends ConfigFormBase {
       '#collapsed' => FALSE,
     );
 //
-//    // Minimum Age Checker.
-//    foreach ($countries as $country) {
-//      $country_array = explode('|', $country);
-//      $country_array = array_map('trim', $country_array);
-//      $form['ages']['age_checker_' . $country_array[0] . '_threshold_ages'] = array(
-//        '#prefix' => '<div class="container-inline">',
-//        '#suffix' => '</div>',
-//        '#title' => if(isset($country_array)) ? $country_array[1] : '',
-//        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_threshold_ages', 18),
-//        '#type' => 'textfield',
-//        '#size' => 3,
-//        '#element_validate' => array('element_validate_integer'),
-//      );
-//    }
+    // Minimum Age Checker.
+    foreach ($countries as $country) {
+      $country_array = explode('|', $country);
+      $country_array = array_map('trim', $country_array);
+      $form['ages']['age_checker_' . $country_array[0] . '_threshold_ages'] = array(
+        '#prefix' => '<div class="container-inline">',
+        '#suffix' => '</div>',
+        '#title' => $country_array[1],
+        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_threshold_ages', 18),
+        '#type' => 'textfield',
+        '#size' => 3,
+        '#element_validate' => array('element_validate_integer'),
+      );
+    }
 
     // Getting the format of the date field.
     $form['country_specific'] = array(
@@ -81,114 +81,114 @@ class AgeCheckerCountryConfig extends ConfigFormBase {
       '#collapsible' => TRUE,
       '#collapsed' => FALSE,
     );
-//
-//    foreach ($countries as $country) {
-//      $country_array = explode('|', $country);
-//      $country_array = array_map('trim', $country_array);
-//      $form['country_specific'][$country_array[0]] = array(
-//        '#title' => $country_array[1],
-//        '#type' => 'fieldset',
-//        '#collapsible' => TRUE,
-//        '#collapsed' => TRUE,
-//      );
-//
-//      // Link for Multilingual site.
+
+    foreach ($countries as $country) {
+      $country_array = explode('|', $country);
+      $country_array = array_map('trim', $country_array);
+      $form['country_specific'][$country_array[0]] = array(
+        '#title' => $country_array[1],
+        '#type' => 'fieldset',
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+      );
+
+      // Link for Multilingual site.
 //      if (module_exists('locale')) {
-//        // Fieldset for Changing the Date format.
-//        $form['country_specific'][$country_array[0]]['multilingual'] = array(
-//          '#title' => t('Redirect links after age gate.'),
-//          '#type' => 'fieldset',
-//          '#collapsible' => TRUE,
-//          '#collapsed' => TRUE,
-//        );
-//        // Changing the weight of Day field.
-//        $form['country_specific'][$country_array[0]]['multilingual']['age_checker_' . $country_array[0] . '_redirect_link'] = array(
-//          '#title' => t('Redirect Link'),
-//          '#default_value' => $config->get('age_checker_' . $country_array[0] . '_redirect_link', $base_url),
-//          '#type' => 'textfield',
-//          '#size' => 255,
-//        );
+        // Fieldset for Changing the Date format.
+        $form['country_specific'][$country_array[0]]['multilingual'] = array(
+          '#title' => t('Redirect links after age gate.'),
+          '#type' => 'fieldset',
+          '#collapsible' => TRUE,
+          '#collapsed' => TRUE,
+        );
+        // Changing the weight of Day field.
+        $form['country_specific'][$country_array[0]]['multilingual']['age_checker_' . $country_array[0] . '_redirect_link'] = array(
+          '#title' => t('Redirect Link'),
+          '#default_value' => $config->get('age_checker_' . $country_array[0] . '_redirect_link', $base_url),
+          '#type' => 'textfield',
+          '#size' => 255,
+        );
 //      }
-//
-//      // Fieldset for Changing the Date format.
-//      $form['country_specific'][$country_array[0]]['weight'] = array(
-//        '#title' => t('Changing the order of the date field'),
-//        '#type' => 'fieldset',
-//        '#collapsible' => TRUE,
-//        '#collapsed' => TRUE,
-//      );
+
+      // Fieldset for Changing the Date format.
+      $form['country_specific'][$country_array[0]]['weight'] = array(
+        '#title' => t('Changing the order of the date field'),
+        '#type' => 'fieldset',
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+      );
 //      // Changing the weight of Day field.
-//      $form['country_specific'][$country_array[0]]['weight']['age_checker_' . $country_array[0] . '_day_weight'] = array(
-//        '#title' => t('Weight of Day Field :'),
-//        '#prefix' => '<div class="container-inline">',
-//        '#suffix' => '</div>',
-//        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_day_weight', 1),
-//        '#type' => 'textfield',
-//        '#size' => 1,
-//        '#element_validate' => array('element_validate_integer'),
-//      );
-//      // Changing the weight of Month field.
-//      $form['country_specific'][$country_array[0]]['weight']['age_checker_' . $country_array[0] . '_month_weight'] = array(
-//        '#title' => t('Weight of Month Field :'),
-//        '#prefix' => '<div class="container-inline">',
-//        '#suffix' => '</div>',
-//        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_month_weight', 2),
-//        '#type' => 'textfield',
-//        '#size' => 1,
-//        '#element_validate' => array('element_validate_integer'),
-//      );
-//      // Changing the weight of Year field.
-//      $form['country_specific'][$country_array[0]]['weight']['age_checker_' . $country_array[0] . '_year_weight'] = array(
-//        '#title' => t('Weight of Year field :'),
-//        '#prefix' => '<div class="container-inline">',
-//        '#suffix' => '</div>',
-//        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_year_weight', 3),
-//        '#type' => 'textfield',
-//        '#size' => 1,
-//        '#element_validate' => array('element_validate_integer'),
-//      );
-//
-//      // Fieldset for Changing the Placeholder.
-//      $form['country_specific'][$country_array[0]]['placeholder'] = array(
-//        '#title' => t('Changing the placeholder of the date field'),
-//        '#type' => 'fieldset',
-//        '#collapsible' => TRUE,
-//        '#collapsed' => TRUE,
-//      );
-//      // Placeholder for Day format.
-//      $form['country_specific'][$country_array[0]]['placeholder']['age_checker_' . $country_array[0] . '_day_placeholder'] = array(
-//        '#type' => 'textfield',
-//        '#title' => t('Day Placeholder :'),
-//        '#prefix' => '<div class="container-inline">',
-//        '#suffix' => '</div>',
-//        '#required' => FALSE,
-//        '#size' => 2,
-//        '#maxlength' => 2,
-//        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_day_placeholder', 'DD'),
-//      );
-//      // Placeholder for Month format.
-//      $form['country_specific'][$country_array[0]]['placeholder']['age_checker_' . $country_array[0] . '_month_placeholder'] = array(
-//        '#type' => 'textfield',
-//        '#title' => t('Month Placeholder :'),
-//        '#prefix' => '<div class="container-inline">',
-//        '#suffix' => '</div>',
-//        '#required' => FALSE,
-//        '#size' => 2,
-//        '#maxlength' => 2,
-//        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_month_placeholder', 'MM'),
-//      );
-//      // Placeholder for Year format.
-//      $form['country_specific'][$country_array[0]]['placeholder']['age_checker_' . $country_array[0] . '_year_placeholder'] = array(
-//        '#type' => 'textfield',
-//        '#prefix' => '<div class="container-inline">',
-//        '#suffix' => '</div>',
-//        '#title' => t('Year Placeholder :'),
-//        '#required' => FALSE,
-//        '#size' => 4,
-//        '#maxlength' => 4,
-//        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_year_placeholder', 'YYYY'),
-//      );
-//    }
+      $form['country_specific'][$country_array[0]]['weight']['age_checker_' . $country_array[0] . '_day_weight'] = array(
+        '#title' => t('Weight of Day Field :'),
+        '#prefix' => '<div class="container-inline">',
+        '#suffix' => '</div>',
+        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_day_weight', 1),
+        '#type' => 'textfield',
+        '#size' => 1,
+        '#element_validate' => array('element_validate_integer'),
+      );
+      // Changing the weight of Month field.
+      $form['country_specific'][$country_array[0]]['weight']['age_checker_' . $country_array[0] . '_month_weight'] = array(
+        '#title' => t('Weight of Month Field :'),
+        '#prefix' => '<div class="container-inline">',
+        '#suffix' => '</div>',
+        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_month_weight', 2),
+        '#type' => 'textfield',
+        '#size' => 1,
+        '#element_validate' => array('element_validate_integer'),
+      );
+      // Changing the weight of Year field.
+      $form['country_specific'][$country_array[0]]['weight']['age_checker_' . $country_array[0] . '_year_weight'] = array(
+        '#title' => t('Weight of Year field :'),
+        '#prefix' => '<div class="container-inline">',
+        '#suffix' => '</div>',
+        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_year_weight', 3),
+        '#type' => 'textfield',
+        '#size' => 1,
+        '#element_validate' => array('element_validate_integer'),
+      );
+
+      // Fieldset for Changing the Placeholder.
+      $form['country_specific'][$country_array[0]]['placeholder'] = array(
+        '#title' => t('Changing the placeholder of the date field'),
+        '#type' => 'fieldset',
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+      );
+      // Placeholder for Day format.
+      $form['country_specific'][$country_array[0]]['placeholder']['age_checker_' . $country_array[0] . '_day_placeholder'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Day Placeholder :'),
+        '#prefix' => '<div class="container-inline">',
+        '#suffix' => '</div>',
+        '#required' => FALSE,
+        '#size' => 2,
+        '#maxlength' => 2,
+        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_day_placeholder', 'DD'),
+      );
+      // Placeholder for Month format.
+      $form['country_specific'][$country_array[0]]['placeholder']['age_checker_' . $country_array[0] . '_month_placeholder'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Month Placeholder :'),
+        '#prefix' => '<div class="container-inline">',
+        '#suffix' => '</div>',
+        '#required' => FALSE,
+        '#size' => 2,
+        '#maxlength' => 2,
+        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_month_placeholder', 'MM'),
+      );
+      // Placeholder for Year format.
+      $form['country_specific'][$country_array[0]]['placeholder']['age_checker_' . $country_array[0] . '_year_placeholder'] = array(
+        '#type' => 'textfield',
+        '#prefix' => '<div class="container-inline">',
+        '#suffix' => '</div>',
+        '#title' => t('Year Placeholder :'),
+        '#required' => FALSE,
+        '#size' => 4,
+        '#maxlength' => 4,
+        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_year_placeholder', 'YYYY'),
+      );
+    }
 
     return parent::buildForm($form, $form_state);
   }
