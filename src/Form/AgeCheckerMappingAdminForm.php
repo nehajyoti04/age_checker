@@ -10,6 +10,7 @@ namespace Drupal\age_checker\Form;
 use Drupal\Core\Datetime\Date;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\Html;
 
 
 class AgeCheckerMappingAdminForm extends ConfigFormBase {
@@ -35,7 +36,7 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
       $language = array_map('trim', $language);
       $form[$language[0] . '_mapping'] = array(
         '#type' => 'fieldset',
-//        '#title' => check_plain($language[1]),
+        '#title' => Html::escape($language[1]),
         '#collapsible' => TRUE,
         '#collapsed' => TRUE,
       );
@@ -55,7 +56,7 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
       // Label of Country Field.
       $form[$language . '_mapping']['age_checker_' . $language . '_select_list_label'] = array(
         '#type' => 'textfield',
-//        '#title' => check_plain(t('Label for selecting country')),
+        '#title' => Html::escape(t('Label for selecting country')),
         '#maxlength' => 255,
         '#required' => FALSE,
         '#default_value' => $config->get('age_checker_' . $language . '_select_list_label', 'Select your country'),
