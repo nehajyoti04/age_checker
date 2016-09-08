@@ -11,6 +11,22 @@ use Drupal\Core\Datetime\Date;
 use Drupal\Component\Serialization\Json;
 
 
+/**
+ * Implements hook_theme().
+ */
+function age_checker_theme() {
+  return array(
+    'age_checker' => array(
+      'template' => 'templates/age-checker',
+      'variables' => array(
+        'age_checker_header_message' => NULL,
+        'age_checker_footer_message' => NULL,
+      ),
+    ),
+  );
+}
+
+
 
 /**
  * Implements hook_page_attachments().
