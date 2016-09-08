@@ -9,6 +9,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Drupal\Core\Datetime\Date;
 use Drupal\Core\Form\ConfigFormBase;
 
+//use Drupal\Component\Utility\Number;
+//use Drupal\Core\Cache\Cache;
+//use Drupal\Core\Entity\ContentEntityBase;
+//use Drupal\comment\CommentInterface;
+//use Drupal\Core\Entity\EntityChangedTrait;
+//use Drupal\Core\Entity\EntityStorageInterface;
+//use Drupal\Core\Entity\EntityTypeInterface;
+//use Drupal\Core\Field\BaseFieldDefinition;
+//use Drupal\field\Entity\FieldStorageConfig;
+//use Drupal\user\Entity\User;
+//use Drupal\user\UserInterface;
 
 /**
  * Implements hook_page_attachments().
@@ -26,6 +37,8 @@ function age_checker_page_attachments(array &$attachments) {
  * Get the country name for Age Gate.
  */
 function age_checker_get_country_name() {
+//  $x = Drupal::request()->getClientIp();
+//  dpm($x);
 
   // Get the country code.
   dpm("inside age checker function");
@@ -73,8 +86,16 @@ function age_checker_get_country_code() {
 //  dpm("ip address");
 //  dpm($ip_address);
 
-
+$ip_address = Drupal::request()->getClientIp();
+//  $x = \Drupal::state('age_checker_country_code_url');
+//  dpm("x");
+//  dpm($x);
+  $x = 'http://geoip.nekudo.com/api/';
 //  $url = \Drupal::state('age_checker_country_code_url') . $ip_address;
+  $url = $x.$ip_address;
+  dpm("url");
+  dpm($url);
+
 //  $geoip_data = age_checker_get_geoip_data($url);
 //
 //  if (is_array($geoip_data)) {
