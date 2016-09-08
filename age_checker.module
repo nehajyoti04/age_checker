@@ -1,25 +1,16 @@
 <?php
 
-use Drupal\Core\Routing\RouteMatchInterface;
-use \Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\State\State;
+//use Drupal\Core\Routing\RouteMatchInterface;
+//use \Drupal\Core\Form\FormStateInterface;
+//use Drupal\Core\State\State;
 use Symfony\Component\HttpFoundation;
-use Symfony\Component\HttpFoundation\Request;
+//use Symfony\Component\HttpFoundation\Request;
 
 use Drupal\Core\Datetime\Date;
-use Drupal\Core\Form\ConfigFormBase;
+//use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Component\Serialization\Json;
 
-//use Drupal\Component\Utility\Number;
-//use Drupal\Core\Cache\Cache;
-//use Drupal\Core\Entity\ContentEntityBase;
-//use Drupal\comment\CommentInterface;
-//use Drupal\Core\Entity\EntityChangedTrait;
-//use Drupal\Core\Entity\EntityStorageInterface;
-//use Drupal\Core\Entity\EntityTypeInterface;
-//use Drupal\Core\Field\BaseFieldDefinition;
-//use Drupal\field\Entity\FieldStorageConfig;
-//use Drupal\user\Entity\User;
-//use Drupal\user\UserInterface;
+
 
 /**
  * Implements hook_page_attachments().
@@ -37,54 +28,36 @@ function age_checker_page_attachments(array &$attachments) {
  * Get the country name for Age Gate.
  */
 function age_checker_get_country_name() {
-//  $x = Drupal::request()->getClientIp();
-//  dpm($x);
-
   // Get the country code.
-  dpm("inside age checker function");
+
   $country_code = age_checker_get_country_code();
-  dpm("country code");
-  dpm($country_code);exit;
-//  // Get the default country.
-//  $default_country = \Drupal::state(('age_checker_default_country');
-//
-//  $countries = \Drupal::state(('age_checker_countries', '');
-//  $countries = explode("\n", $countries);
-//  foreach ($countries as $country) {
-//    $country_array = explode('|', $country);
-//    if (trim($country_array[0]) == $country_code) {
-//      $country_name = $country_code;
-//      break;
-//    }
-//    else {
-//      $country_name = $default_country;
-//    }
-//  }
-//  return $country_name;
+  // Get the default country.
+  $default_country =\Drupal::state()->get('age_checker_default_country');
+
+  $countries = \Drupal::state()->get('age_checker_countries', '');
+
+//  dpm("countries");
+//  dpm($countries);exit;
+
+  $countries = explode("\n", $countries);
+
+  foreach ($countries as $country) {
+    $country_array = explode('|', $country);
+    if (trim($country_array[0]) == $country_code) {
+      $country_name = $country_code;
+      break;
+    }
+    else {
+      $country_name = $default_country;
+    }
+  }
+  return $country_name;
 }
 
 /**
  * Get the country code.
  */
 function age_checker_get_country_code() {
-//  dpm("inside age_checker_get_country_code");
-////  $x1 = $this->request->getClientIp();
-////  dpm("x1");
-////  dpm($x1);
-//  $x2 = Drupal::request()->getClientIp();
-//  dpm("x2");
-//  dpm($x2);
-//
-//  $x3 = Drupal::getClientIp();
-//  dpm("x3");
-//  dpm($x3);exit;
-////  $ip_address = \Drupal::request()->getClientIp();
-//
-////  $ip_address = Request::getClientIp();
-////  $ip_address = ip_address();
-////  $ip_address = Drupal\age_checker\EventSubscriber\AgeCheckerSubscriber::_get_ip_address();
-//  dpm("ip address");
-//  dpm($ip_address);
 
 $ip_address = Drupal::request()->getClientIp();
 //  $x = \Drupal::state('age_checker_country_code_url');
@@ -93,18 +66,16 @@ $ip_address = Drupal::request()->getClientIp();
   $x = 'http://geoip.nekudo.com/api/';
 //  $url = \Drupal::state('age_checker_country_code_url') . $ip_address;
   $url = $x.$ip_address;
-  dpm("url");
-  dpm($url);
+  $geoip_data = age_checker_get_geoip_data($url);
 
-//  $geoip_data = age_checker_get_geoip_data($url);
-//
-//  if (is_array($geoip_data)) {
-//    $country_code = $geoip_data['country']['code'];
-//  }
-//  else {
-//    $country_code = \Drupal::state('age_checker_default_country');
-//  }
-//  return $country_code;
+  if (is_array($geoip_data)) {
+    $country_code = $geoip_data['country']['code'];
+  }
+  else {
+    $country_code = \Drupal::state('age_checker_default_country');
+  }
+
+  return $country_code;
 }
 
 /**
@@ -112,11 +83,16 @@ $ip_address = Drupal::request()->getClientIp();
  */
 function age_checker_get_geoip_data($url) {
   $json_data = FALSE;
-  $request = drupal_http_request($url);
-
-  if (isset($request->data)) {
-    $json_data = drupal_json_decode($request->data);
+  try {
+    $response = \Drupal::httpClient()->get($url, array('headers' => array('Accept' => 'text/plain')));
+    $data = (string) $response->getBody();
+    $json_data = Json::decode($data);
+    if (empty($json_data)) {
+      return FALSE;
+    }
   }
-
+  catch (RequestException $e) {
+    return FALSE;
+  }
   return $json_data;
 }
