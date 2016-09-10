@@ -10,18 +10,18 @@
  */
 ?>
 
-        <div >hello</div>
-{#<div id="age_checker_content" class="agegate_content">#}
-    {#<div id="age_checker_header_message">#}
-        {#<?php print $age_checker_header_message; ?>#}
-    {#</div>#}
 
-    {#<div id="age_checker_widget">#}
-        {#<div id="age_checker_error_message"> </div>#}
-        {#<?php print (\Drupal::formBuilder()->getForm('Drupal\age_checker\Form\AgeCheckerForm));?>#}
-    {#</div>#}
-{#</div>#}
+<div id="age_checker_content" class="agegate_content">
+<div id="age_checker_header_message">
+        <?php print $age_checker_header_message; ?>
+</div>
 
-{#<div id="age_checker_footer_message">#}
-    {#<?php print $age_checker_footer_message; ?>#}
-{#</div>#}
+<div id="age_checker_widget">
+        <div id="age_checker_error_message"> </div>
+        <?php print (\Drupal::formBuilder()->getForm('Drupal\age_checker\Form\AgeCheckerForm));?>
+</div>
+</div>
+
+<div id="age_checker_footer_message">
+        <?php print $age_checker_footer_message; ?>
+</div>

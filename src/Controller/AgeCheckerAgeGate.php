@@ -17,7 +17,13 @@ use Drupal\Core\Link;
 //use Symfony\Component\HttpFoundation\Request;
 //use Symfony\Component\HttpFoundation\Response;
 //use Drupal\Core\Site\Settings;
-
+//use Drupal\Core\Render\RendererInterface;
+//use Drupal\Core\Routing\UrlGeneratorInterface;
+//use Drupal\Core\Session\AccountInterface;
+//use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+//use Symfony\Component\HttpFoundation\Response;
+//use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+//use Symfony\Component\HttpKernel\KernelEvents;
 
 
 class AgeCheckerAgeGate extends ControllerBase {
@@ -53,13 +59,55 @@ class AgeCheckerAgeGate extends ControllerBase {
 //    dpm($age_checker_footer_message);
 //    exit;
 
-    return theme('age_checker',
-      array(
-        'age_checker_header_message' => $age_checker_header_message,
-        'age_checker_footer_message' => $age_checker_footer_message,
-      )
+//    return theme('age_checker',
+//      array(
+//        'age_checker_header_message' => $age_checker_header_message,
+//        'age_checker_form' => $age_checker_form,
+//        'age_checker_footer_message' => $age_checker_footer_message,
+//      )
+//    );
+
+//    $loader = [
+//      '#theme' => 'webprofiler_loader',
+//      '#token' => $token,
+//      '#profiler_url' => $this->urlGenerator->generate('webprofiler.toolbar', ['profile' => $token]),
+//    ];
+//
+//    $loader = [
+//      '#theme' => 'age_checker',
+//      '#token' => $token,
+//      '#profiler_url' => $this->urlGenerator->generate('webprofiler.toolbar', ['profile' => $token]),
+//    ];
+
+//    return array(
+//      '#theme' => 'age_checker',
+////      '#test_var' => $this->t('Test Value'),
+//    );
+
+
+    return array(
+      '#theme' => 'age_checker',
+      '#age_checker_header_message' => $age_checker_header_message,
+      '#age_checker_form' => $age_checker_form,
+      '#age_checker_footer_message' => $age_checker_footer_message,
     );
 
+
+//    return array(
+//      '#theme' => 'age_checker',
+//      '#age_checker_header_message' => $age_checker_header_message,
+//    );
+
+
+//    exit;
+
+
+//    return theme('age_checker',
+//      array(
+//        'age_checker_header_message' => $age_checker_header_message,
+//        'age_checker_footer_message' => $age_checker_footer_message,
+//      )
+//    );
 
 
 //    // Sending variable to template.
@@ -88,7 +136,7 @@ class AgeCheckerAgeGate extends ControllerBase {
       $language = explode('|', $language);
       $language = array_map('trim', $language);
 
-      $languages_options[$language[0]] = isset($language) ? $language[1] : NULL;
+      $languages_options[$language[0]] = isset($language[1]) ? $language[1] : NULL;
     }
 
 //    dpm("function call");

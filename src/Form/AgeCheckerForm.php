@@ -23,7 +23,7 @@ class AgeCheckerForm extends FormBase {
   }
 
   public function buildForm(array $form, FormStateInterface $form_state) {
-
+    $form = array();
     // Getting the langauge_code.
 //    $language_code = age_checker_get_language_code();
 //
@@ -52,17 +52,17 @@ class AgeCheckerForm extends FormBase {
 //      );
 //    }
 //
-//    $form['age_checker_error_message'] = array(
-//      '#type' => 'markup',
-//      '#markup' => '<div id="age_checker_error_message"> </div>',
-//      '#weight' => 0,
-//    );
+    $form['age_checker_error_message'] = array(
+      '#type' => 'markup',
+      '#markup' => '<div id="age_checker_error_message"> </div>',
+      '#weight' => 0,
+    );
 //
 //    // Day form Element.
-//    $form['day'] = array(
-//      '#type' => 'textfield',
-//      '#size' => 2,
-//      '#maxlength' => 2,
+    $form['day'] = array(
+      '#type' => 'textfield',
+      '#size' => 2,
+      '#maxlength' => 2,
 //      '#id' => 'age_checker_day',
 //      '#weight' => \Drupal::state()->get('age_checker_' . $selected_country . '_day_weight'),
 //      '#required' => TRUE,
@@ -71,7 +71,7 @@ class AgeCheckerForm extends FormBase {
 //        'tabindex' => \Drupal::state()->get('age_checker_' . $selected_country . '_day_weight'),
 //        'placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_day_placeholder'),
 //      ),
-//    );
+    );
 //
 //    // Month form Element.
 //    $form['month'] = array(
@@ -118,16 +118,18 @@ class AgeCheckerForm extends FormBase {
 //      );
 //    }
 //
-//    // Submit button.
-//    $form['submit'] = array(
-//      '#type' => 'submit',
+    // Submit button.
+    $form['submit'] = array(
+      '#type' => 'submit',
 //      '#value' => \Drupal::state()->get('age_checker_' . $language_code . '_button_text'),
-//      '#weight' => 6,
+      '#value' => 'hello',
+      '#weight' => 6,
 //      '#attributes' => array(
 //        'onclick' => "age_checker.verify();",
 //        'tabindex' => '6',
 //      ),
-//    );
+    );
+
 //
 //    $form['#attributes']['onsubmit'] = 'return false;';
 
@@ -139,7 +141,9 @@ class AgeCheckerForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-//    $birthdate = $form_state->getValue('birthdate');
+
+
+    $birthdate = $form_state->getValue('day');
 //    $age_on_date = $form_state->getValue('age_on_date');
 //
 //    // Convert dates to timestamps.
@@ -147,11 +151,11 @@ class AgeCheckerForm extends FormBase {
 //    $age_on_date_timestamp = strtotime($age_on_date);
 //
 //    // Check if birthdate greater than age on time.
-//    if ($birthdate_timestamp > $age_on_date_timestamp) {
+    if (!empty($birthdate)) {
 //      unset($form['calculated_age']['#markup']);
-//      // Show error if the date of birth is in future.
-//      $form_state->setErrorByName('birthdate', $this->t('Age on date should not be lesser than date of birth.'));
-//    }
+      // Show error if the date of birth is in future.
+      $form_state->setErrorByName('day', $this->t('Age on date should not be lesser than date of birth.'));
+    }
   }
 
   /**

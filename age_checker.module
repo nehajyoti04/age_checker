@@ -14,17 +14,71 @@ use Drupal\Component\Serialization\Json;
 /**
  * Implements hook_theme().
  */
-function age_checker_theme() {
+//function age_checker_theme() {
+//  return array(
+//    'age_checker_agegate' => array(
+//      'variables' => array(
+//        'age_checker_header_message' => NULL,
+//        'age_checker_footer_message' => NULL,
+//      ),
+//    ),
+//  );
+//}
+
+
+
+
+function age_checker_theme($existing, $type, $theme, $path) {
   return array(
     'age_checker' => array(
-      'template' => 'templates/age-checker',
       'variables' => array(
         'age_checker_header_message' => NULL,
+        'age_checker_form' => NULL,
         'age_checker_footer_message' => NULL,
       ),
     ),
   );
 }
+
+
+/**
+ * Implements hook_theme().
+ */
+//function age_checker_theme($existing, $type, $theme, $path) {
+//  return array(
+//    'age_checker' => array(
+////      'template' => 'age_checker',
+//      'variables' => array(
+//        'age_checker_header_message' => NULL,
+////        'age_checker_form' => NULL,
+////        'age_checker_footer_message' => NULL,
+//      ),
+//    ),
+//  );
+
+
+
+//  return array(
+//    'age_checker' => array(
+//      '#template' => 'templates/age_checker',
+//      'variables' => array(
+//        '#age_checker_header_message' => NULL,
+//        '#age_checker_form' => NULL,
+//        '#age_checker_footer_message' => NULL,
+//      ),
+//    ),
+//  );
+//  return array(
+//    '#theme' => array('age_checker',
+//      '#template' => 'templates/age_checker',
+//      'variables' => array(
+//    '#age_checker_header_message' => $age_checker_header_message,
+//    '#age_checker_form' => $age_checker_form,
+//    '#age_checker_footer_message' => $age_checker_footer_message,
+//    ),
+//    ),
+//  );
+//}
 
 
 
