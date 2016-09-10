@@ -1,27 +1,5 @@
-<?php
-/**
- * @file
- * Theme implementation to display age checker on a single Drupal page.
- *
- * Available variables:
- * - $age_checker_header_message: This variable will provide a text below logo
- * - $age_checker_form : This variable will provide form.
- * - $age_checker_footer_message: This variable provides footer text of form.
- */
-?>
+<div class="acme-hello-text">
 
-
-<div id="age_checker_content" class="agegate_content">
-<div id="age_checker_header_message">
-        <?php print $age_checker_header_message; ?>
+    <h1>Hello {{ age_checker_header_message }}</h1>
 </div>
 
-<div id="age_checker_widget">
-        <div id="age_checker_error_message"> </div>
-        <?php print (\Drupal::formBuilder()->getForm('Drupal\age_checker\Form\AgeCheckerForm));?>
-</div>
-</div>
-
-<div id="age_checker_footer_message">
-        <?php print $age_checker_footer_message; ?>
-</div>
