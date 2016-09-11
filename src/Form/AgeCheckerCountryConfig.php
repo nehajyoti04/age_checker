@@ -211,6 +211,14 @@ class AgeCheckerCountryConfig extends ConfigFormBase {
       $country_array = array_map('trim', $country_array);
 
       \Drupal::state()->set('age_checker_' . $country_array[0] . '_threshold_ages', $form_state->getValues()['age_checker_' . $country_array[0] . '_threshold_ages']);
+      \Drupal::state()->set('age_checker_' . $country_array[0] . '_redirect_link', $form_state->getValues()['age_checker_' . $country_array[0] . '_redirect_link']);
+      \Drupal::state()->set('age_checker_' . $country_array[0] . '_day_weight', $form_state->getValues()['age_checker_' . $country_array[0] . '_day_weight']);
+      \Drupal::state()->set('age_checker_' . $country_array[0] . '_month_weight', $form_state->getValues()['age_checker_' . $country_array[0] . '_month_weight']);
+      \Drupal::state()->set('age_checker_' . $country_array[0] . '_year_weight', $form_state->getValues()['age_checker_' . $country_array[0] . '_year_weight']);
+      \Drupal::state()->set('age_checker_' . $country_array[0] . '_day_placeholder', $form_state->getValues()['age_checker_' . $country_array[0] . '_day_placeholder']);
+      \Drupal::state()->set('age_checker_' . $country_array[0] . '_month_placeholder', $form_state->getValues()['age_checker_' . $country_array[0] . '_month_placeholder']);
+      \Drupal::state()->set('age_checker_' . $country_array[0] . '_year_placeholder', $form_state->getValues()['age_checker_' . $country_array[0] . '_year_placeholder']);
+
       $this->config('age_checker_country.settings')
         ->set('age_checker_default_country', $form_state->getValues()['age_checker_default_country'])
         ->set('age_checker_' . $country_array[0] . '_threshold_ages', $form_state->getValues()['age_checker_' . $country_array[0] . '_threshold_ages'])

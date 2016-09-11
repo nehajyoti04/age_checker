@@ -178,8 +178,17 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Set values in variables.
 
+
+    \Drupal::state()->set('age_checker_option_remember_me', $form_state->getValues()['age_checker_option_remember_me']);
+    \Drupal::state()->set('age_checker_country_code_url', $form_state->getValues()['age_checker_country_code_url']);
     \Drupal::state()->set('age_checker_language', $form_state->getValues()['age_checker_language']);
     \Drupal::state()->set('age_checker_countries', $form_state->getValues()['age_checker_countries']);
+    \Drupal::state()->set('age_checker_cookie_expiration_time', $form_state->getValues()['age_checker_cookie_expiration_time']);
+    \Drupal::state()->set('age_checker_under_age_url', $form_state->getValues()['age_checker_under_age_url']);
+    \Drupal::state()->set('age_checker_visibility', $form_state->getValues()['age_checker_visibility']);
+    \Drupal::state()->set('age_checker_pages', $form_state->getValues()['age_checker_pages']);
+    \Drupal::state()->set('age_checker_background_image', $form_state->getValues()['age_checker_background_image']);
+    \Drupal::state()->set('age_checker_logo', $form_state->getValues()['age_checker_logo']);
 
     $this->config('age_checker.settings')
       ->set('age_checker_option_remember_me', $form_state->getValues()['age_checker_option_remember_me'])
