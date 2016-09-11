@@ -194,8 +194,8 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
       $language = array_map('trim', $language);
       $language = $language[0];
 
-      dpm("form state");
-      dpm($form_state->getValues());
+      // dpm("form state");
+      // dpm($form_state->getValues());
       \Drupal::state()->set('age_checker_' . $language . '_country_list', $form_state->getValues()['age_checker_' . $language . '_country_list']);
       \Drupal::state()->set('age_checker_' . $language . '_age_gate_header', $form_state->getValues()['age_checker_' . $language . '_age_gate_header']);
       \Drupal::state()->set('age_checker_' . $language . '_age_gate_footer', $form_state->getValues()['age_checker_' . $language . '_age_gate_footer']);

@@ -11,6 +11,8 @@ use Drupal\Core\Datetime\Date;
 use Drupal\Component\Serialization\Json;
 use Drupal\age_checker\Controller\AgeCheckerAgeGate;
 
+define('AGE_CHECKER_VISIBILITY_NOTLISTED', 0);
+define('AGE_CHECKER_VISIBILITY_LISTED', 1);
 
 /**
  * Implements hook_theme().
@@ -98,7 +100,7 @@ function age_checker_page_attachments(array &$attachments) {
 
 
 $user = \Drupal::currentUser();
-//  global $base_url;
+ global $base_url;
 //
 //  $path = current_path();
 //  $destination = ($path == 'agegate') ? $_GET['destination'] : $path;
@@ -120,49 +122,93 @@ $user = \Drupal::currentUser();
   //
   //
 
+$current_path = \Drupal::service('path.current')->getPath();
+$is_front = \Drupal::service('path.matcher')->isFrontPage();
+  $destination = ($current_path == 'agegate') ? $_GET['destination'] : $current_path;
 
-  $selected_country = isset($_COOKIE['country_selected']) ? $_COOKIE['country_selected'] : age_checker_get_country_name();
+
+
+  // $selected_country = isset($_COOKIE['country_selected']) ? $_COOKIE['country_selected'] : age_checker_get_country_name();
 
   // Getting the language_code.
-  $language_code = AgeCheckerAgeGate::age_checker_get_language_code();
+  // $language_code = AgeCheckerAgeGate::age_checker_get_language_code();
 
-$age_checker_variables = array(
-              'cookie_expiration' => \Drupal::state()->get('age_checker_cookie_expiration_time', 15),
-              'currentdate'       => date("Y/m/d", time()),
-              'threshold_age'     => \Drupal::state()->get('age_checker_' . $selected_country . '_threshold_ages'),
-              'redirecturl'       => \Drupal::state()->get('age_checker_under_age_url', '/'),
-              'blank_err_message' => \Drupal::state()->get('age_checker_' . $language_code . '_blank_error_msg', ''),
-              'dateformat_error'  => \Drupal::state()->get('age_checker_' . $language_code . '_dateformat_error_msg', ''),
-              'under_age_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_underage_error_msg', ''),
-              'date_range_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_daterange_error_msg', ''),
-              // 'destination' => $destination,
-              // 'verify' => $verify,
-              'day_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_day_placeholder'),
-              'month_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_month_placeholder'),
-              'year_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_year_placeholder'),
-              'redirecturl' => \Drupal::state()->get('age_checker_under_age_url'),
-              // 'id_1' => $id[0],
-              // 'id_2' => $id[1],
-              // 'id_3' => $id[2],
+$visibility = \Drupal::state()->get('age_checker_visibility', AGE_CHECKER_VISIBILITY_NOTLISTED);
+      $pages = \Drupal::state()->get('age_checker_pages', '');
+      $verify = FALSE;
 
-          );
+      // Determine if this page should be behind age checker.
+      $path_alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_path, $pages);
+      switch ($visibility) {
+        case AGE_CHECKER_VISIBILITY_NOTLISTED:
+          if (!(\Drupal::service('path.matcher')->matchPath($path_alias))) {
+            $verify = TRUE;
+          }
+          break;
 
+        case AGE_CHECKER_VISIBILITY_LISTED:
+          if (\Drupal::service('path.matcher')->matchPath($path_alias)) {
+            $verify = TRUE;
+          }
+          break;
+      }
 
 
-// $age_checker_variables = array("hello1" => "hello1" , "hello2" => "hello2");
-// $attachments['#attached']['age_checker']['test'] =  $age_checker_variables;
-$attachments['#attached']['drupalSettings']['age_checker'] = $age_checker_variables;
-// $attachments['#attached']['age_checker_agegate']['test'] = $age_checker_variables;
-  // $attachments['#attached']['library'][] = array('age_checker', 'admin');
-  // $form['#attached']['library'][] = array('webform', 'admin');
-  //
-  //
-  // // Add module variables to JS.
-  //
-  //
 
-      $variables = array(
-            'age_checker' => array(
+      if ($verify) {
+        dpm("current path");
+        dpm($current_path);
+        if ($current_path != '/age-gate') {
+          if (!function_exists('drush_main')) {
+
+          //   drupal_goto($base_url . '/agegate', array("query" => array('destination' => request_path())));
+//           $response = new RedirectResponse(
+//             $base_url . '/agegate', array("query" => array('destination' => request_path()))
+//             );
+// $response->send();
+
+          }
+        }
+        else {
+
+          // Disable caching for agegate page.
+          // drupal_page_is_cacheable(FALSE);
+          // Default country.
+          $selected_country = isset($_COOKIE['country_selected']) ? $_COOKIE['country_selected'] : age_checker_get_country_name();
+
+          if ($destination == 'agegate' || $destination == 'node' || $is_front || (($current_path == '/age-gate') && ($destination == ''))) {
+            if (\Drupal::moduleHandler()->moduleExists('locale')) {
+              $destination = \Drupal::state()->get('age_checker_' . $selected_country . '_redirect_link');
+            }
+            else {
+              $destination = $base_url;
+            }
+          }
+          else {
+            $destination = $base_url . '/' . $destination;
+          }
+
+
+          // Getting the language_code.
+          $language_code = AgeCheckerAgeGate::age_checker_get_language_code();
+
+          // Auto Tab.
+          $day_weight = \Drupal::state()->get('age_checker_' . $selected_country . '_day_weight');
+          $month_weight = \Drupal::state()->get('age_checker_' . $selected_country . '_month_weight');
+          $year_weight = \Drupal::state()->get('age_checker_' . $selected_country . '_year_weight');
+
+          $combine_array = array($day_weight, $month_weight, $year_weight);
+
+          asort($combine_array);
+
+          $i = 0;
+          foreach ($combine_array as $key => $value) {
+            $id[$i] = age_checker_get_id($key);
+            $i++;
+          }
+
+          // Add module variables to JS.
+          $age_checker_variables = array(
               'cookie_expiration' => \Drupal::state()->get('age_checker_cookie_expiration_time', 15),
               'currentdate'       => date("Y/m/d", time()),
               'threshold_age'     => \Drupal::state()->get('age_checker_' . $selected_country . '_threshold_ages'),
@@ -172,7 +218,7 @@ $attachments['#attached']['drupalSettings']['age_checker'] = $age_checker_variab
               'under_age_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_underage_error_msg', ''),
               'date_range_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_daterange_error_msg', ''),
               'destination' => $destination,
-              'verify' => $verify,
+              // 'verify' => $verify,
               'day_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_day_placeholder'),
               'month_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_month_placeholder'),
               'year_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_year_placeholder'),
@@ -180,8 +226,116 @@ $attachments['#attached']['drupalSettings']['age_checker'] = $age_checker_variab
               'id_1' => $id[0],
               'id_2' => $id[1],
               'id_3' => $id[2],
-            ),
+
           );
+dpm("before attahment callback");
+
+
+// $age_checker_variables = array("hello1" => "hello1" , "hello2" => "hello2");
+// $attachments['#attached']['age_checker']['test'] =  $age_checker_variables;
+$attachments['#attached']['drupalSettings']['age_checker'] = $age_checker_variables;
+
+
+        }
+      }
+
+
+
+
+
+
+  // if ($destination == 'agegate' || $destination == 'node' || $is_front || ((current_path() == 'agegate') && ($destination == ''))) {
+  //           if (\Drupal::moduleHandler()->moduleExists('locale')) {
+  //             $destination = \Drupal::state()->get('age_checker_' . $selected_country . '_redirect_link');
+  //           }
+  //           else {
+  //             $destination = $base_url;
+  //           }
+  //         }
+  //         else {
+  //           $destination = $base_url . '/' . $destination;
+  //         }
+
+
+          // // Auto Tab.
+          // $day_weight = \Drupal::state()->get('age_checker_' . $selected_country . '_day_weight');
+          // $month_weight = \Drupal::state()->get('age_checker_' . $selected_country . '_month_weight');
+          // $year_weight = \Drupal::state()->get('age_checker_' . $selected_country . '_year_weight');
+
+          // $combine_array = array($day_weight, $month_weight, $year_weight);
+
+          // asort($combine_array);
+
+          // $i = 0;
+          // foreach ($combine_array as $key => $value) {
+          //   $id[$i] = age_checker_get_id($key);
+          //   $i++;
+          // }
+
+
+
+// $age_checker_variables = array(
+//               'cookie_expiration' => \Drupal::state()->get('age_checker_cookie_expiration_time', 15),
+//               'currentdate'       => date("Y/m/d", time()),
+//               'threshold_age'     => \Drupal::state()->get('age_checker_' . $selected_country . '_threshold_ages'),
+//               'redirecturl'       => \Drupal::state()->get('age_checker_under_age_url', '/'),
+//               'blank_err_message' => \Drupal::state()->get('age_checker_' . $language_code . '_blank_error_msg', ''),
+//               'dateformat_error'  => \Drupal::state()->get('age_checker_' . $language_code . '_dateformat_error_msg', ''),
+//               'under_age_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_underage_error_msg', ''),
+//               'date_range_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_daterange_error_msg', ''),
+//               'destination' => $destination,
+//               // 'verify' => $verify,
+//               'day_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_day_placeholder'),
+//               'month_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_month_placeholder'),
+//               'year_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_year_placeholder'),
+//               'redirecturl' => \Drupal::state()->get('age_checker_under_age_url'),
+//               'id_1' => $id[0],
+//               'id_2' => $id[1],
+//               'id_3' => $id[2],
+
+//           );
+
+
+
+// // $age_checker_variables = array("hello1" => "hello1" , "hello2" => "hello2");
+// // $attachments['#attached']['age_checker']['test'] =  $age_checker_variables;
+// $attachments['#attached']['drupalSettings']['age_checker'] = $age_checker_variables;
+//
+
+
+
+
+
+// $attachments['#attached']['age_checker_agegate']['test'] = $age_checker_variables;
+  // $attachments['#attached']['library'][] = array('age_checker', 'admin');
+  // $form['#attached']['library'][] = array('webform', 'admin');
+  //
+  //
+  // // Add module variables to JS.
+  //
+  //
+
+      // $variables = array(
+      //       'age_checker' => array(
+      //         'cookie_expiration' => \Drupal::state()->get('age_checker_cookie_expiration_time', 15),
+      //         'currentdate'       => date("Y/m/d", time()),
+      //         'threshold_age'     => \Drupal::state()->get('age_checker_' . $selected_country . '_threshold_ages'),
+      //         'redirecturl'       => \Drupal::state()->get('age_checker_under_age_url', '/'),
+      //         'blank_err_message' => \Drupal::state()->get('age_checker_' . $language_code . '_blank_error_msg', ''),
+      //         'dateformat_error'  => \Drupal::state()->get('age_checker_' . $language_code . '_dateformat_error_msg', ''),
+      //         'under_age_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_underage_error_msg', ''),
+      //         'date_range_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_daterange_error_msg', ''),
+      //         'destination' => $destination,
+      //         'verify' => $verify,
+      //         'day_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_day_placeholder'),
+      //         'month_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_month_placeholder'),
+      //         'year_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_year_placeholder'),
+      //         'redirecturl' => \Drupal::state()->get('age_checker_under_age_url'),
+      //         'id_1' => $id[0],
+      //         'id_2' => $id[1],
+      //         'id_3' => $id[2],
+      //       ),
+      //     );
 
 
         //   drupal_add_js(array(
@@ -282,4 +436,20 @@ function age_checker_get_geoip_data($url) {
     return FALSE;
   }
   return $json_data;
+}
+
+/**
+ * Get the ID for date element.
+ */
+function age_checker_get_id($key) {
+
+  if ($key == 0) {
+    return "#age_checker_day";
+  }
+  elseif ($key == 1) {
+    return "#age_checker_month";
+  }
+  else {
+    return "#age_checker_year";
+  }
 }
