@@ -72,7 +72,11 @@ public function AgeCheckerSubscriberLoad(GetResponseEvent $event) {
 
   if ($user->id() > 0) {
     setcookie('age_checker', 1, 0, $GLOBALS['base_path'], NULL, FALSE, TRUE);
+    dpm("cookie set");
   }
+  // else {
+  //   dpm("cookie not set");
+  // }
 
   if (($age_gate_cookie != 1) && ($remember_me_cookie != 1)) {
     if ($this->age_checker_show_age_gate()) {

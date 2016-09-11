@@ -92,6 +92,33 @@ function age_checker_page_attachments(array &$attachments) {
 // $build['#attached']['drupalSettings']['testvar'] = $testVariable;
 //
 // $attachments['#attached']['drupalSettings']['test'] = 'hello mike testing';
+//
+//
+
+
+$user = \Drupal::currentUser();
+//  global $base_url;
+//
+//  $path = current_path();
+//  $destination = ($path == 'agegate') ? $_GET['destination'] : $path;
+//
+  // $age_gate_cookie = isset($_COOKIE['age_checker']) ? $_COOKIE['age_checker'] : 0;
+  // $remember_me_cookie = isset($_COOKIE['remember_me']) ? $_COOKIE['remember_me'] : 0;
+
+  // if ($user->id() > 0) {
+  //   setcookie('age_checker', 1, 0, $GLOBALS['base_path'], NULL, FALSE, TRUE);
+  // }
+
+  // if (($age_gate_cookie != 1) && ($remember_me_cookie != 1)) {
+  //   if ($this->age_checker_show_age_gate()) {
+
+  //   }
+
+  // }
+
+
+
+
 $age_checker_variables = array("hello1" => "hello1" , "hello2" => "hello2");
 // $attachments['#attached']['age_checker']['test'] =  $age_checker_variables;
 $attachments['#attached']['drupalSettings']['age_checker'] = $age_checker_variables;
@@ -104,28 +131,28 @@ $attachments['#attached']['drupalSettings']['age_checker'] = $age_checker_variab
   //
   //
 
-  //     $variables = array(
-  //           'age_checker' => array(
-  //             'cookie_expiration' => \Drupal::state()->get('age_checker_cookie_expiration_time', 15),
-  //             'currentdate'       => date("Y/m/d", time()),
-  //             'threshold_age'     => \Drupal::state()->get('age_checker_' . $selected_country . '_threshold_ages'),
-  //             'redirecturl'       => \Drupal::state()->get('age_checker_under_age_url', '/'),
-  //             'blank_err_message' => \Drupal::state()->get('age_checker_' . $language_code . '_blank_error_msg', ''),
-  //             'dateformat_error'  => \Drupal::state()->get('age_checker_' . $language_code . '_dateformat_error_msg', ''),
-  //             'under_age_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_underage_error_msg', ''),
-  //             'date_range_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_daterange_error_msg', ''),
-  //             'destination' => $destination,
-  //             'verify' => $verify,
-  //             'day_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_day_placeholder'),
-  //             'month_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_month_placeholder'),
-  //             'year_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_year_placeholder'),
-  //             'redirecturl' => \Drupal::state()->get('age_checker_under_age_url'),
-  //             'id_1' => $id[0],
-  //             'id_2' => $id[1],
-  //             'id_3' => $id[2],
-  //           ),
-  //         );
-  //       }
+      $variables = array(
+            'age_checker' => array(
+              'cookie_expiration' => \Drupal::state()->get('age_checker_cookie_expiration_time', 15),
+              'currentdate'       => date("Y/m/d", time()),
+              'threshold_age'     => \Drupal::state()->get('age_checker_' . $selected_country . '_threshold_ages'),
+              'redirecturl'       => \Drupal::state()->get('age_checker_under_age_url', '/'),
+              'blank_err_message' => \Drupal::state()->get('age_checker_' . $language_code . '_blank_error_msg', ''),
+              'dateformat_error'  => \Drupal::state()->get('age_checker_' . $language_code . '_dateformat_error_msg', ''),
+              'under_age_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_underage_error_msg', ''),
+              'date_range_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_daterange_error_msg', ''),
+              'destination' => $destination,
+              'verify' => $verify,
+              'day_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_day_placeholder'),
+              'month_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_month_placeholder'),
+              'year_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_year_placeholder'),
+              'redirecturl' => \Drupal::state()->get('age_checker_under_age_url'),
+              'id_1' => $id[0],
+              'id_2' => $id[1],
+              'id_3' => $id[2],
+            ),
+          );
+
 
         //   drupal_add_js(array(
         //     'age_checker' => array(
