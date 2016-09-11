@@ -199,6 +199,14 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
       \Drupal::state()->set('age_checker_' . $language . '_country_list', $form_state->getValues()['age_checker_' . $language . '_country_list']);
       \Drupal::state()->set('age_checker_' . $language . '_age_gate_header', $form_state->getValues()['age_checker_' . $language . '_age_gate_header']);
       \Drupal::state()->set('age_checker_' . $language . '_age_gate_footer', $form_state->getValues()['age_checker_' . $language . '_age_gate_footer']);
+      \Drupal::state()->set('age_checker_' . $language . '_blank_error_msg', $form_state->getValues()['age_checker_' . $language . '_blank_error_msg']);
+      \Drupal::state()->set('age_checker_' . $language . '_dateformat_error_msg', $form_state->getValues()['age_checker_' . $language . '_dateformat_error_msg']);
+      \Drupal::state()->set('age_checker_' . $language . '_daterange_error_msg', $form_state->getValues()['age_checker_' . $language . '_daterange_error_msg']);
+      \Drupal::state()->set('age_checker_' . $language . '_underage_error_msg', $form_state->getValues()['age_checker_' . $language . '_underage_error_msg']);
+      \Drupal::state()->set('age_checker_' . $language . '_remember_me_text', $form_state->getValues()['age_checker_' . $language . '_remember_me_text']);
+      \Drupal::state()->set('age_checker_' . $language . '_button_text', $form_state->getValues()['age_checker_' . $language . '_button_text']);
+      \Drupal::state()->set('age_checker_' . $language . '_footer_links', $form_state->getValues()['age_checker_' . $language . '_footer_links']);
+      \Drupal::state()->set('age_checker_' . $language . '_copyright', $form_state->getValues()['age_checker_' . $language . '_copyright']);
 
       $this->config('age_checker_mapping.settings')
         ->set('age_checker_' . $language . '_select_list_label', $form_state->getValues()['age_checker_' . $language . '_select_list_label'])

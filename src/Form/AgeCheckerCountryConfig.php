@@ -210,6 +210,7 @@ class AgeCheckerCountryConfig extends ConfigFormBase {
       $country_array = explode('|', $country);
       $country_array = array_map('trim', $country_array);
 
+      \Drupal::state()->set('age_checker_' . $country_array[0] . '_threshold_ages', $form_state->getValues()['age_checker_' . $country_array[0] . '_threshold_ages']);
       $this->config('age_checker_country.settings')
         ->set('age_checker_default_country', $form_state->getValues()['age_checker_default_country'])
         ->set('age_checker_' . $country_array[0] . '_threshold_ages', $form_state->getValues()['age_checker_' . $country_array[0] . '_threshold_ages'])

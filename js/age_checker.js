@@ -13,6 +13,9 @@ var age_checker = {};
       $(document).ready(function() {
 
         // alert("hello1");
+        console.log("hello1");
+        console.log("age checker test");
+        console.log(drupalSettings.age_checker);
         var agegate_bg = $('.age-checker-bg img').attr('src');
         $('#age_checker').css('background-image', 'url(' + agegate_bg + ')');
         $('.age-checker-bg').remove();
