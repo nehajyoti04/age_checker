@@ -23,10 +23,10 @@ var age_checker = {};
         if (screen.width < 480) {
           $('head').append('<meta name="viewport" content="width=device-width, initial-scale=1">');
         }
-        if (window.location.pathname === '/agegate' && Drupal.settings.age_checker !== 'undefined') {
-          var id1 = Drupal.settings.age_checker.id_1;
-          var id2 = Drupal.settings.age_checker.id_2;
-          var id3 = Drupal.settings.age_checker.id_3;
+        if (window.location.pathname === '/agegate' && drupalSettings.age_checker !== 'undefined') {
+          var id1 = drupalSettings.age_checker.id_1;
+          var id2 = drupalSettings.age_checker.id_2;
+          var id3 = drupalSettings.age_checker.id_3;
 
           $(id1).keyup(function() {
             if (this.value.length === this.maxLength) {
@@ -53,8 +53,8 @@ var age_checker = {};
         // alert("hello");
         console.log("Drupal");
         console.log(Drupal);
-        console.log("Drupal.settings");
-        console.log(Drupal.settings);
+        console.log("drupalSettings");
+        console.log(drupalSettings);
         console.log("drupalSettings");
         console.log(drupalSettings);
         console.log("age checker test");
@@ -62,8 +62,8 @@ var age_checker = {};
         console.log("age checker test - hello1");
         console.log(drupalSettings.age_checker.hello1);
 
-        exit;
-        var now = new Date(Drupal.settings.age_checker.currentdate);
+        // exit;
+        var now = new Date(drupalSettings.age_checker.currentdate);
         var date = now.getDate();
         var month = now.getMonth() + 1;
         var year = now.getFullYear();
@@ -73,16 +73,16 @@ var age_checker = {};
         var age = year - age_checker_year;
         var dobdate = new Date(age_checker_year, age_checker_month - 1, age_checker_day).getTime();
         var today = now.getTime();
-        var threshold_age = Drupal.settings.age_checker.threshold_age;
-        var day_placeholder = Drupal.settings.age_checker.day_placeholder;
-        var month_placeholder = Drupal.settings.age_checker.month_placeholder;
-        var year_placeholder = Drupal.settings.age_checker.year_placeholder;
+        var threshold_age = drupalSettings.age_checker.threshold_age;
+        var day_placeholder = drupalSettings.age_checker.day_placeholder;
+        var month_placeholder = drupalSettings.age_checker.month_placeholder;
+        var year_placeholder = drupalSettings.age_checker.year_placeholder;
         var leapyear = ((age_checker_year % 4 === 0) && (age_checker_year % 100 !== 0)) || (age_checker_year % 400 === 0);
-        var blank_err_message = Drupal.settings.age_checker.blank_err_message;
-        var dateformat_error = Drupal.settings.age_checker.dateformat_error;
-        var date_range_err_msg = Drupal.settings.age_checker.date_range_err_msg;
+        var blank_err_message = drupalSettings.age_checker.blank_err_message;
+        var dateformat_error = drupalSettings.age_checker.dateformat_error;
+        var date_range_err_msg = drupalSettings.age_checker.date_range_err_msg;
         var remember_me = $('#age_checker_remember_me:checked').val();
-        var destination = Drupal.settings.age_checker.destination;
+        var destination = drupalSettings.age_checker.destination;
 
         if (age_checker_month > month) {
           age--;
@@ -126,13 +126,13 @@ var age_checker = {};
           document.getElementById('age_checker_error_message').innerHTML = Drupal.t(dateformat_error);
           return false;
         } else if (age < threshold_age) {
-          alert(Drupal.settings.age_checker.under_age_err_msg);
-          window.location = Drupal.settings.age_checker.redirecturl;
+          alert(drupalSettings.age_checker.under_age_err_msg);
+          window.location = drupalSettings.age_checker.redirecturl;
         } else {
           var cookie_name = "age_checker=1; path=/;";
           document.cookie = cookie_name;
           if (remember_me === "1") {
-            setCookie('remember_me', 1, Drupal.settings.age_checker.cookie_expiration);
+            setCookie('remember_me', 1, drupalSettings.age_checker.cookie_expiration);
           }
           window.location = destination;
         }
