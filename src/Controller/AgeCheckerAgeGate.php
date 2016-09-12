@@ -125,7 +125,7 @@ class AgeCheckerAgeGate extends ControllerBase {
   /**
    * Getting the language_code on the basis of Country selected.
    */
-  public function age_checker_get_language_code() {
+  public static function age_checker_get_language_code() {
 
     $languages_options = array();
     $countries_array = array();

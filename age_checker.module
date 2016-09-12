@@ -11,6 +11,7 @@ use Drupal\Core\Datetime\Date;
 use Drupal\Component\Serialization\Json;
 use Drupal\age_checker\Controller\AgeCheckerAgeGate;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\age_checker\EventSubscriber\AgeCheckerSubscriber;
 
 define('AGE_CHECKER_VISIBILITY_NOTLISTED', 0);
 define('AGE_CHECKER_VISIBILITY_LISTED', 1);
@@ -126,14 +127,28 @@ $user = \Drupal::currentUser();
 $current_path = \Drupal::service('path.current')->getPath();
 $is_front = \Drupal::service('path.matcher')->isFrontPage();
   $destination = ($current_path == '/age-gate') ? $_GET['destination'] : $current_path;
+$age_gate_cookie = isset($_COOKIE['age_checker']) ? $_COOKIE['age_checker'] : 0;
+  $remember_me_cookie = isset($_COOKIE['remember_me']) ? $_COOKIE['remember_me'] : 0;
 
+  dpm("age gate cookie");
+  dpm($age_gate_cookie);
+  dpm("remember_me cookie");
+  dpm($remember_me_cookie);
+  dpm("global path");
+  dpm($GLOBALS['base_path']);
+  // exit;
 
+// Setting up cookie in case of logged in users.
+  if ($user->id() > 0) {
+    setcookie('age_checker', 1, 0, $GLOBALS['base_path'], NULL, FALSE, TRUE);
+  }
 
   // $selected_country = isset($_COOKIE['country_selected']) ? $_COOKIE['country_selected'] : age_checker_get_country_name();
 
   // Getting the language_code.
   // $language_code = AgeCheckerAgeGate::age_checker_get_language_code();
-
+if (($age_gate_cookie != 1) && ($remember_me_cookie != 1)) {
+    if (AgeCheckerSubscriber::age_checker_show_age_gate()) {
 $visibility = \Drupal::state()->get('age_checker_visibility', AGE_CHECKER_VISIBILITY_NOTLISTED);
       $pages = \Drupal::state()->get('age_checker_pages', '');
       $verify = FALSE;
@@ -170,7 +185,7 @@ $visibility = \Drupal::state()->get('age_checker_visibility', AGE_CHECKER_VISIBI
           // $url = \Drupal\Core\Url::fromRoute('age_checker.agegate')
           // ->setRouteParameters(array("query" => array('destination' => $request_path)));
           // $url = \Drupal\Core\Url::fromRoute('age_checker.agegate');
-         $url = Drupal::url('age_checker.agegate', array("query" => array('destination' => $request_path)));
+          $url = Drupal::url('age_checker.agegate', array("query" => array('destination' => $request_path)));
 
           dpm("url");
           dpm($url);
@@ -268,7 +283,8 @@ $attachments['#attached']['drupalSettings']['age_checker'] = $age_checker_variab
 
         }
       }
-
+}
+}
 
 
 
