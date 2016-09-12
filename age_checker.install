@@ -9,11 +9,11 @@
  */
 function age_checker_install() {
 // $base_path = $request->getBaseUrl();
- // $base_path = base_path();
-//   drupal_set_message(
-//     t('Please save default values in configuration settings. To configure your Age checker go to the <a href="!url">Age checker setting page</a>.',
-//     array('!url' => $base_path . 'admin/config/people/age_checker'))
-//   );
+ $base_path = base_path();
+  drupal_set_message(
+    t('Please save default values in configuration settings. To configure your Age checker go to the <a href="@url">Age checker setting page</a>.',
+    array('@url' => $base_path . 'admin/config/people/age_checker'))
+  );
 }
 
 /**
