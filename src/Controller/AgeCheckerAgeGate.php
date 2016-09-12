@@ -36,8 +36,8 @@ class AgeCheckerAgeGate extends ControllerBase {
     // Getting the language Code.
     $language_code = $this->age_checker_get_language_code();
 
-//    dpm("language code");
-//    dpm($language_code);
+   // dpm("language code");
+   // dpm($language_code);
     // Header text of the form.
     $age_checker_header_message_array = \Drupal::state()
       ->get('age_checker_' . $language_code . '_age_gate_header');

@@ -10,6 +10,7 @@ use Drupal\Core\Datetime\Date;
 //use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Component\Serialization\Json;
 use Drupal\age_checker\Controller\AgeCheckerAgeGate;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 define('AGE_CHECKER_VISIBILITY_NOTLISTED', 0);
 define('AGE_CHECKER_VISIBILITY_LISTED', 1);
@@ -124,7 +125,7 @@ $user = \Drupal::currentUser();
 
 $current_path = \Drupal::service('path.current')->getPath();
 $is_front = \Drupal::service('path.matcher')->isFrontPage();
-  $destination = ($current_path == 'agegate') ? $_GET['destination'] : $current_path;
+  $destination = ($current_path == '/age-gate') ? $_GET['destination'] : $current_path;
 
 
 
@@ -141,13 +142,13 @@ $visibility = \Drupal::state()->get('age_checker_visibility', AGE_CHECKER_VISIBI
       $path_alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_path, $pages);
       switch ($visibility) {
         case AGE_CHECKER_VISIBILITY_NOTLISTED:
-          if (!(\Drupal::service('path.matcher')->matchPath($path_alias))) {
+          if (!(\Drupal::service('path.matcher')->matchPath($path_alias, $pages))) {
             $verify = TRUE;
           }
           break;
 
         case AGE_CHECKER_VISIBILITY_LISTED:
-          if (\Drupal::service('path.matcher')->matchPath($path_alias)) {
+          if (\Drupal::service('path.matcher')->matchPath($path_alias, $pages)) {
             $verify = TRUE;
           }
           break;
@@ -159,13 +160,42 @@ $visibility = \Drupal::state()->get('age_checker_visibility', AGE_CHECKER_VISIBI
         dpm("current path");
         dpm($current_path);
         if ($current_path != '/age-gate') {
+
+          \Drupal::logger('my_module')->notice($current_path);
+          $x = function_exists('drush_main');
+          \Drupal::logger('function_exists')->notice($x);
           if (!function_exists('drush_main')) {
+
+            $request_path = '';
+          // $url = \Drupal\Core\Url::fromRoute('age_checker.agegate')
+          // ->setRouteParameters(array("query" => array('destination' => $request_path)));
+          // $url = \Drupal\Core\Url::fromRoute('age_checker.agegate');
+         $url = Drupal::url('age_checker.agegate', array("query" => array('destination' => $request_path)));
+
+          dpm("url");
+          dpm($url);
+          // \Drupal::logger('url')->notice($url);
+
+          // return new RedirectResponse($url);
+          // $url = 'http://other-example.com';
+          // return new RedirectResponse($url);
+          // return new RedirectResponse(\Drupal::url('age_checker.agegate'));
+          // $attachments ->setRedirectUrl($url);
+
+          // return new RedirectResponse($url);
+          // $this ->setRedirectUrl($url);
+
+
+            $response = new RedirectResponse($url);
+            $response->send();
+            return;
 
           //   drupal_goto($base_url . '/agegate', array("query" => array('destination' => request_path())));
 //           $response = new RedirectResponse(
 //             $base_url . '/agegate', array("query" => array('destination' => request_path()))
 //             );
 // $response->send();
+          // drupal_goto($base_url . '/agegate', array("query" => array('destination' => request_path())));
 
           }
         }
@@ -176,7 +206,7 @@ $visibility = \Drupal::state()->get('age_checker_visibility', AGE_CHECKER_VISIBI
           // Default country.
           $selected_country = isset($_COOKIE['country_selected']) ? $_COOKIE['country_selected'] : age_checker_get_country_name();
 
-          if ($destination == 'agegate' || $destination == 'node' || $is_front || (($current_path == '/age-gate') && ($destination == ''))) {
+          if ($destination == '/age-gate' || $destination == 'node' || $is_front || (($current_path == '/age-gate') && ($destination == ''))) {
             if (\Drupal::moduleHandler()->moduleExists('locale')) {
               $destination = \Drupal::state()->get('age_checker_' . $selected_country . '_redirect_link');
             }
