@@ -207,7 +207,7 @@ function age_checker_get_country_code() {
     $country_code = $geoip_data['country']['code'];
   }
   else {
-    $country_code = \Drupal::state('age_checker_default_country');
+    $country_code = \Drupal::state()->get('age_checker_default_country');
   }
   return $country_code;
 }
