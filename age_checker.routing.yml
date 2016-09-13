@@ -28,6 +28,3 @@ age_checker.agegate:
     _controller: '\Drupal\age_checker\Controller\AgeCheckerAgeGate::age_checker_template'
   requirements:
     _access: 'TRUE'
-#      _title: 'Country Configuration'
-#  requirements:
-#    _permission: 'administer age checker settings'

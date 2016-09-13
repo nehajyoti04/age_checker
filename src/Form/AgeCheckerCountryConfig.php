@@ -93,7 +93,7 @@ class AgeCheckerCountryConfig extends ConfigFormBase {
       );
 
       // Link for Multilingual site.
-     if (\Drupal::moduleHandler()->moduleExists('locale')) {
+      if (\Drupal::moduleHandler()->moduleExists('locale')) {
         // Fieldset for Changing the Date format.
         $form['country_specific'][$country_array[0]]['multilingual'] = array(
           '#title' => t('Redirect links after age gate.'),
@@ -108,7 +108,7 @@ class AgeCheckerCountryConfig extends ConfigFormBase {
           '#type' => 'textfield',
           '#size' => 255,
         );
-     }
+      }
 
       // Fieldset for Changing the Date format.
       $form['country_specific'][$country_array[0]]['weight'] = array(
@@ -234,4 +234,3 @@ class AgeCheckerCountryConfig extends ConfigFormBase {
     parent::submitForm($form, $form_state);
   }
 }
-

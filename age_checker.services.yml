@@ -1,11 +1,5 @@
 services:
   age_checker.subscriber:
     class: Drupal\age_checker\EventSubscriber\AgeCheckerSubscriber
-#    arguments:
-#      - '@request'
     tags:
       - { name: 'event_subscriber' }
-#  foo:
-#      class: Drupal\age_checker\AgeCheckerIpAddress
-#      arguments:
-#        - '@request'

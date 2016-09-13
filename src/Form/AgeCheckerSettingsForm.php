@@ -178,7 +178,6 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Set values in variables.
 
-
     \Drupal::state()->set('age_checker_option_remember_me', $form_state->getValues()['age_checker_option_remember_me']);
     \Drupal::state()->set('age_checker_country_code_url', $form_state->getValues()['age_checker_country_code_url']);
     \Drupal::state()->set('age_checker_language', $form_state->getValues()['age_checker_language']);

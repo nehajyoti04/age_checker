@@ -222,11 +222,8 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
         ->set('age_checker_' . $language . '_footer_links', $form_state->getValues()['age_checker_' . $language . '_footer_links'])
         ->set('age_checker_' . $language . '_copyright', $form_state->getValues()['age_checker_' . $language . '_copyright'])
         ->save();
-
     }
-
     // Set values in variables.
-
     parent::submitForm($form, $form_state);
   }
 }

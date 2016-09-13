@@ -1,6 +1,3 @@
-# Add a default local task for the file system settings page, so that the local
-# task added by Configuration Translation becomes visible. This facilitates
-# manual testing.
 age_checker.admin_config:
   route_name: age_checker.admin_config
   title: General Settings

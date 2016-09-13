@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\example\Form\AgeChecker.
+ * Contains Drupal\age_checker\Form\AgeChecker.
  */
 
 namespace Drupal\age_checker\Form;
@@ -9,10 +9,9 @@ namespace Drupal\age_checker\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\age_checker\Controller\AgeCheckerAgeGate;
-use DateTime;
-//use Drupal\age_checker\Form\AgeCalculatorSettingsForm;
+
 /**
- * Implements an example form.
+ * Implements an AgeChecker form.
  */
 class AgeCheckerForm extends FormBase {
 
@@ -164,23 +163,4 @@ class AgeCheckerForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
   }
 
-//  /**
-//   * Implements hook_theme().
-//   */
-//  function age_calculator_theme() {
-//    return array(
-//      'age_calculator' => array(
-//        'arguments' => array(
-//          'date_information' => NULL,
-//        ),
-//      ),
-//    );
-//  }
-
-  /**
-   * Ajax callback for calculate age button.
-   */
-//  public function age_calculator_display_results(array &$form, FormStateInterface $form_state) {
-//    return $form['calculated_age'];
-//  }
 }
