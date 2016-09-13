@@ -168,6 +168,46 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
     return parent::buildForm($form, $form_state);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+
+    // Validation for countries.
+    $countries = $form_state->getValue('age_checker_countries');
+    $countries = explode("\n", $countries);
+    $country_options = array();
+    foreach ($countries as $country) {
+      $country = explode('|', $country);
+      if ($country[1] == '') {
+        $form_state->setErrorByName('age_checker_countries', $this->t('Please remove the extra space.'));
+      }
+      $country_options[$country[0]] = $country[1];
+      $countries_list = array_map('trim', $country_options);
+    }
+    foreach ($countries_list as $country_list) {
+      if (preg_match('/[0-9]/', $country_list)) {
+        $form_state->setErrorByName('age_checker_countries', $this->t('Please enter proper country name'));
+      }
+    }
+
+    // Validation for languages.
+    $languages = $form_state->getValue('age_checker_language');
+    $languages = explode("\n", $languages);
+    foreach ($languages as $language) {
+      $language = explode('|', $language);
+      if ($language[1] == '') {
+        $form_state->setErrorByName('age_checker_language', $this->t('Please remove the extra space.'));
+      }
+      $language_options[$language[0]] = $language[1];
+      $language_list = array_map('trim', $language_options);
+    }
+    foreach ($language_list as $language) {
+      if (preg_match('/[0-9]/', $language)) {
+        $form_state->setErrorByName('age_checker_language', $this->t('Please enter proper language name'));
+      }
+    }
+  }
 
   /**
    * Implements hook_form_submit().
