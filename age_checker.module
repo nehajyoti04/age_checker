@@ -80,17 +80,10 @@ function age_checker_page_attachments(array &$attachments) {
           }
           break;
       }
-
-
+      
       if ($verify) {
-
         if ($current_path != '/age-gate') {
-
-          \Drupal::logger('my_module')->notice($current_path);
-          $x = function_exists('drush_main');
-          \Drupal::logger('function_exists')->notice($x);
           if (!function_exists('drush_main')) {
-
             $request_path = '';
             $url = Drupal::url('age_checker.agegate', array("query" => array('destination' => $request_path)));
             $response = new RedirectResponse($url);

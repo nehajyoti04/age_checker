@@ -135,28 +135,6 @@ class AgeCheckerForm extends FormBase {
     return $form;
   }
 
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-
-
-    $birthdate = $form_state->getValue('day');
-//    $age_on_date = $form_state->getValue('age_on_date');
-//
-//    // Convert dates to timestamps.
-//    $birthdate_timestamp = strtotime($birthdate);
-//    $age_on_date_timestamp = strtotime($age_on_date);
-//
-//    // Check if birthdate greater than age on time.
-    if (!empty($birthdate)) {
-//      unset($form['calculated_age']['#markup']);
-      // Show error if the date of birth is in future.
-      $form_state->setErrorByName('day', $this->t('Age on date should not be lesser than date of birth.'));
-    }
-  }
-
   /**
    * {@inheritdoc}
    */
