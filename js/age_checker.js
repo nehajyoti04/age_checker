@@ -12,10 +12,6 @@ var age_checker = {};
     attach: function(context, settings) {
       $(document).ready(function() {
 
-        // alert("hello1");
-        console.log("hello1");
-        console.log("age checker test");
-        console.log(drupalSettings.age_checker);
         var agegate_bg = $('.age-checker-bg img').attr('src');
         $('#age_checker').css('background-image', 'url(' + agegate_bg + ')');
         $('.age-checker-bg').remove();
@@ -50,19 +46,7 @@ var age_checker = {};
 
       // Function to verify the age limits.
       age_checker.verify = function() {
-        // alert("hello");
-        console.log("Drupal");
-        console.log(Drupal);
-        console.log("drupalSettings");
-        console.log(drupalSettings);
-        console.log("drupalSettings");
-        console.log(drupalSettings);
-        console.log("age checker test");
-        console.log(drupalSettings.age_checker);
-        console.log("age checker test - hello1");
-        console.log(drupalSettings.age_checker.hello1);
 
-        // exit;
         var now = new Date(drupalSettings.age_checker.currentdate);
         var date = now.getDate();
         var month = now.getMonth() + 1;
