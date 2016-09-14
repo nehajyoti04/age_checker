@@ -11,3 +11,4 @@ datestamp: 1472644262
 stylesheets:
   all:
     - css/age_checker.css
+configure: age_checker.settings
