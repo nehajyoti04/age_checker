@@ -10,7 +10,6 @@ namespace Drupal\age_checker\Form;
 use Drupal\Core\Datetime\Date;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-
 use Drupal\Core\Url;
 
 class AgeCheckerSettingsForm extends ConfigFormBase {
