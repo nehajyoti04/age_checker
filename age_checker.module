@@ -8,8 +8,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\age_checker\EventSubscriber\AgeCheckerSubscriber;
 use Drupal\Core\Url;
 
-define('AGE_CHECKER_VISIBILITY_NOTLISTED', 0);
-define('AGE_CHECKER_VISIBILITY_LISTED', 1);
+
+if(!defined('AGE_CHECKER_VISIBILITY_NOTLISTED')) {
+  define('AGE_CHECKER_VISIBILITY_NOTLISTED', 0);
+}
+if(!defined('AGE_CHECKER_VISIBILITY_LISTED')) {
+  define('AGE_CHECKER_VISIBILITY_LISTED', 1);
+}
 
 function age_checker_theme($existing, $type, $theme, $path) {
   $age_checker_footer_links = array();
@@ -22,7 +27,7 @@ function age_checker_theme($existing, $type, $theme, $path) {
     $language = $language[0];
 
     $age_checker_footer_links[] = \Drupal::state()->get('age_checker_' . $language . '_footer_links');
-    $age_checker_copyright[] = \Drupal::state()->set('age_checker_' . $language . '_copyright');
+    $age_checker_copyright[] = \Drupal::state()->get('age_checker_' . $language . '_copyright');
 
   }
 
@@ -74,7 +79,8 @@ function age_checker_page_attachments(array &$attachments) {
 
   $current_path = \Drupal::service('path.current')->getPath();
   $is_front = \Drupal::service('path.matcher')->isFrontPage();
-  $destination = ($current_path == '/age-gate') ? $_GET['destination'] : $current_path;
+  $request = \Drupal::request();
+  $destination = ($current_path == '/age-gate') ? $request->query->get('destination') : $current_path;
   $age_gate_cookie = isset($_COOKIE['age_checker']) ? $_COOKIE['age_checker'] : 0;
   $remember_me_cookie = isset($_COOKIE['remember_me']) ? $_COOKIE['remember_me'] : 0;
 
@@ -116,6 +122,7 @@ function age_checker_page_attachments(array &$attachments) {
           if (!function_exists('drush_main')) {
             $request_path = '';
             $url = Drupal::url('age_checker.agegate', array("query" => array('destination' => $request_path)));
+            
             $response = new RedirectResponse($url);
             $response->send();
             return;
