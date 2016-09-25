@@ -26,7 +26,6 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
 
     $config = $this->config('age_checker.settings');
 
-
     $form = array();
 
     // Remember me checkbox for Age Gate.
@@ -162,7 +161,6 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
         'file_validate_size' => array(1000000),
       ),
     );
-
 
     return parent::buildForm($form, $form_state);
   }

@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\age_checker\EventSubscriber\AgeCheckerSubscriber;
 use Drupal\Core\Url;
 
-
 if(!defined('AGE_CHECKER_VISIBILITY_NOTLISTED')) {
   define('AGE_CHECKER_VISIBILITY_NOTLISTED', 0);
 }
@@ -65,7 +64,6 @@ function age_checker_theme_suggestions_page_alter(array &$suggestions, array $va
     $suggestions[] = 'age_checker_' . $hook;
   }
 }
-
 
 /**
  * Implements hook_page_attachments().
@@ -210,8 +208,8 @@ function age_checker_page_attachments(array &$attachments) {
  * Get the country name for Age Gate.
  */
 function age_checker_get_country_name() {
-  // Get the country code.
 
+  // Get the country code.
   $country_code = age_checker_get_country_code();
   // Get the default country.
   $default_country =\Drupal::state()->get('age_checker_default_country');
