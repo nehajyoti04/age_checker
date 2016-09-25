@@ -84,7 +84,7 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
       '#title' => t('Please enter the list of countries in key|value pair.'),
       '#required' => TRUE,
       '#maxlength' => 255,
-      '#default_value' => $config->get('age_checker_countries', ''),
+      '#default_value' => $config->get('age_checker_countries'),
       '#description' => t('Please enter required country in localized language e.g. ES|España. The key should be picked up from A2 (ISO) column of ') . $link . t(' site depending on the value of the country.'),
     );
 
@@ -103,7 +103,7 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
       '#field_suffix' => t('Days'),
       '#size' => 6,
       '#element_validate' => array('element_validate_integer'),
-      '#default_value' => $config->get('age_checker_cookie_expiration_time', '15'),
+      '#default_value' => $config->get('age_checker_cookie_expiration_time'),
       '#description' => t('The number of days before the cookie set by age checker module expires, and the user must verify their age again (0 days will expire at end of session).'),
     );
 
@@ -111,7 +111,7 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
     $form['options']['age_checker_under_age_url'] = array(
       '#title' => t('Enter underage page url'),
       '#type' => 'textfield',
-      '#default_value' => $config->get('age_checker_under_age_url', ''),
+      '#default_value' => $config->get('age_checker_under_age_url'),
       '#required' => TRUE,
       '#description' => t('Please add http:// or https:// for external url  or create a drupal CMS page and enter Drupal path for internal CMS Page. E.g "under-age" for  http://www.example.com/sitename/under-age'),
     );
@@ -124,13 +124,13 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
         AGE_CHECKER_VISIBILITY_NOTLISTED => t('Show on all pages except those listed'),
         AGE_CHECKER_VISIBILITY_LISTED    => t('Show only on the listed pages'),
       ),
-      '#default_value' => $config->get('age_checker_visibility', AGE_CHECKER_VISIBILITY_NOTLISTED),
+      '#default_value' => $config->get('age_checker_visibility'),
     );
     // Age checker specific pages.
     $form['options']['age_checker_pages'] = array(
       '#type' => 'textarea',
       '#title' => t('Age gate exception pages'),
-      '#default_value' => $config->get('age_checker_pages', 'admin/*'),
+      '#default_value' => $config->get('age_checker_pages'),
       '#description' => t("Enter the path of the page e.g. enter 'blog' for the blog main page and 'blog/*' for the blog main page and its subpages."),
     );
 
@@ -139,7 +139,7 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
       '#type' => 'managed_file',
       '#name' => 'backgroundimage_image',
       '#title' => t('Add Background image'),
-      '#default_value' => $config->get('age_checker_background_image', ''),
+      '#default_value' => $config->get('age_checker_background_image'),
       '#description' => t("Upload an image for the background of Age Gate. Allowed Extensions for the Image are gif, png, jpg, jpeg"),
       '#upload_location' => 'public://images_age_checker/',
       '#upload_validators' => array(
@@ -153,7 +153,7 @@ class AgeCheckerSettingsForm extends ConfigFormBase {
       '#type' => 'managed_file',
       '#name' => 'logo_agechecker',
       '#title' => t('Add logo image'),
-      '#default_value' => $config->get('age_checker_logo', ''),
+      '#default_value' => $config->get('age_checker_logo'),
       '#description' => t("Upload an image for the logo of Age Gate. Allowed Extensions for the Image are gif, png, jpg, jpeg"),
       '#upload_location' => 'public://images_age_checker/',
       '#upload_validators' => array(

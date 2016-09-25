@@ -66,7 +66,7 @@ class AgeCheckerCountryConfig extends ConfigFormBase {
         '#prefix' => '<div class="container-inline">',
         '#suffix' => '</div>',
         '#title' => $country_array[1],
-        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_threshold_ages', 18),
+        '#default_value' => $config->get('age_checker_' . $country_array[0] . '_threshold_ages'),
         '#type' => 'textfield',
         '#size' => 3,
         '#element_validate' => array('element_validate_integer'),
