@@ -120,7 +120,7 @@ function age_checker_page_attachments(array &$attachments) {
           if (!function_exists('drush_main')) {
             $request_path = '';
             $url = Drupal::url('age_checker.agegate', array("query" => array('destination' => $request_path)));
-            
+
             $response = new RedirectResponse($url);
             $response->send();
             return;
@@ -234,7 +234,7 @@ function age_checker_get_country_name() {
 function age_checker_get_country_code() {
 
   $ip_address = Drupal::request()->getClientIp();
-  $age_checker_country_code_url = \Drupal::state()->get('age_checker_country_code_url');
+  $age_checker_country_code_url = \Drupal::state()->get('age_checker_country_code_url', 'http://geoip.nekudo.com/api/');
   $url = $age_checker_country_code_url . $ip_address;
   $geoip_data = age_checker_get_geoip_data($url);
 
