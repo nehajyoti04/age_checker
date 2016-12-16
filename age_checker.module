@@ -1,7 +1,8 @@
 <?php
 
+use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\HttpFoundation;
-use Drupal\Core\Datetime\Date;
+use Drupal\Core\Datetime;
 use Drupal\Component\Serialization\Json;
 use Drupal\age_checker\Controller\AgeCheckerAgeGate;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -78,7 +79,9 @@ function age_checker_page_attachments(array &$attachments) {
   $current_path = \Drupal::service('path.current')->getPath();
   $is_front = \Drupal::service('path.matcher')->isFrontPage();
   $request_path = \Drupal::request()->getRequestUri();
+
   $destination = ($current_path == '/age-gate') ? $request_path : $current_path;
+
   $age_gate_cookie = isset($_COOKIE['age_checker']) ? $_COOKIE['age_checker'] : 0;
   $remember_me_cookie = isset($_COOKIE['remember_me']) ? $_COOKIE['remember_me'] : 0;
 
@@ -119,7 +122,6 @@ function age_checker_page_attachments(array &$attachments) {
         if ($current_path != '/age-gate') {
           if (!function_exists('drush_main')) {
             $url = Drupal::url('age_checker.agegate');
-            // $url = Drupal::url('age_checker.agegate', array("query" => array('destination' => $destination)));
             $response = new RedirectResponse($url);
             $response->send();
             return;
@@ -182,7 +184,7 @@ function age_checker_page_attachments(array &$attachments) {
               ->get('age_checker_' . $language_code . '_underage_error_msg', ''),
             'date_range_err_msg' => \Drupal::state()
               ->get('age_checker_' . $language_code . '_daterange_error_msg', ''),
-            'destination' => $request_path,
+            'destination' => $destination,
             // 'verify' => $verify,
             'day_placeholder' => \Drupal::state()
               ->get('age_checker_' . $selected_country . '_day_placeholder'),
