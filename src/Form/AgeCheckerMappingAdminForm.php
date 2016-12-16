@@ -25,6 +25,7 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $config = $this->config('age_checker_mapping.settings');
+    $default_settings = \Drupal::config('age_checker.settings');
 
     $form = array();
     $languages = \Drupal::state()->get('age_checker_language', 'Please provide values');
@@ -99,7 +100,7 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
         '#title' => t('Blank Error Message'),
         '#required' => TRUE,
         '#maxlength' => 255,
-        '#default_value' => $config->get('age_checker_' . $language . '_blank_error_msg', 'Date field can not be blank.'),
+        '#default_value' => $config->get('age_checker_' . $language . '_blank_error_msg') ? $config->get('age_checker_' . $language . '_blank_error_msg') : $default_settings->get('age_checker_blank_error_msg'),
         '#description' => t('Enter a helpful and user-friendly message.'),
       );
 
@@ -109,7 +110,7 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
         '#title' => t('Incorrect Date Format Message'),
         '#required' => TRUE,
         '#maxlength' => 255,
-        '#default_value' => $config->get('age_checker_' . $language . '_dateformat_error_msg', 'Please enter your date of birth in correct format.'),
+        '#default_value' => $config->get('age_checker_' . $language . '_dateformat_error_msg') ? $config->get('age_checker_' . $language . '_dateformat_error_msg') : $default_settings->get('age_checker_dateformat_error_msg'),
         '#description' => t('Enter a helpful and user-friendly message.'),
       );
       // Date Out of Range Validation Message.
@@ -118,7 +119,7 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
         '#title' => t('Date Out Of Range Message'),
         '#required' => TRUE,
         '#maxlength' => 255,
-        '#default_value' => $config->get('age_checker_' . $language . '_daterange_error_msg', 'Please enter your date of birth in valid date range.'),
+        '#default_value' => $config->get('age_checker_' . $language . '_daterange_error_msg') ? $config->get('age_checker_' . $language . '_daterange_error_msg') : $default_settings->get('age_checker_daterange_error_msg'),
         '#description' => t('Enter a helpful and user-friendly message.'),
       );
 
@@ -128,7 +129,7 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
         '#title' => t('Under Age Validation Message'),
         '#required' => TRUE,
         '#maxlength' => 255,
-        '#default_value' => $config->get('age_checker_' . $language . '_underage_error_msg', 'Sorry, you are Under age limit and are prohibited from entering this site!'),
+        '#default_value' => $config->get('age_checker_' . $language . '_underage_error_msg') ? $config->get('age_checker_' . $language . '_underage_error_msg') : $default_settings->get('age_checker_underage_error_msg'),
         '#description' => t('Enter a helpful and user-friendly message.'),
       );
 
@@ -138,7 +139,7 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
         '#title' => t('Remember Me Text'),
         '#maxlength' => 255,
         '#required' => FALSE,
-        '#default_value' => $config->get('age_checker_' . $language . '_remember_me_text', 'Remember my details (Do not select on shared computers)'),
+        '#default_value' => $config->get('age_checker_' . $language . '_remember_me_text') ? $config->get('age_checker_' . $language . '_remember_me_text') : $default_settings->get('age_checker_remember_me_text'),
         '#description' => t('Please enter the remember me text.'),
       );
 
@@ -148,7 +149,7 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
         '#title' => t('Label of submit button'),
         '#maxlength' => 50,
         '#required' => TRUE,
-        '#default_value' => $config->get('age_checker_' . $language . '_button_text', 'Submit'),
+        '#default_value' => $config->get('age_checker_' . $language . '_button_text') ? $config->get('age_checker_' . $language . '_button_text') : $default_settings->get('age_checker_button_text'),
         '#description' => t('Please enter submit button text.'),
       );
 
