@@ -42,7 +42,8 @@ class AgeCheckerMappingAdminForm extends ConfigFormBase {
       $language = $language[0];
 
       // Field for selecting the country for a particular language.
-      $countries = \Drupal::state()->get('age_checker_countries', '');
+      $countries = \Drupal::state()->get('age_checker_countries') ? (\Drupal::state()->get('age_checker_countries')) : \Drupal::config('age_checker.settings')->get('age_checker_countries');
+
       $countries = explode("\n", $countries);
       $country_options = array();
       $country_options[0] = 'Select the Country';
