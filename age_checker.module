@@ -19,7 +19,9 @@ if(!defined('AGE_CHECKER_VISIBILITY_LISTED')) {
 function age_checker_theme($existing, $type, $theme, $path) {
   $age_checker_footer_links = array();
   $age_checker_copyright = array();
-  $languages = \Drupal::state()->get('age_checker_language', 'Please provide values');
+  $default_settings = \Drupal::config('age_checker.settings');
+
+  $languages = \Drupal::state()->get('age_checker_language') ? \Drupal::state()->get('age_checker_language') : $default_settings->get('age_checker_language');
   $languages = explode("\n", $languages);
   foreach ($languages as $language) {
     $language = explode('|', $language);
@@ -76,6 +78,7 @@ function age_checker_page_attachments(array &$attachments) {
   $user = \Drupal::currentUser();
   global $base_url;
 
+  $default_settings = \Drupal::config('age_checker.settings');
   $current_path = \Drupal::service('path.current')->getPath();
   $is_front = \Drupal::service('path.matcher')->isFrontPage();
   $request_path = \Drupal::request()->getRequestUri();
@@ -169,29 +172,19 @@ function age_checker_page_attachments(array &$attachments) {
 
           // Add module variables to JS.
           $age_checker_variables = array(
-            'cookie_expiration' => \Drupal::state()
-              ->get('age_checker_cookie_expiration_time', 15),
+            'cookie_expiration' => \Drupal::state()->get('age_checker_cookie_expiration_time', 15),
             'currentdate' => date("Y/m/d", time()),
-            'threshold_age' => \Drupal::state()
-              ->get('age_checker_' . $selected_country . '_threshold_ages'),
-            'redirecturl' => \Drupal::state()
-              ->get('age_checker_under_age_url', '/'),
-            'blank_err_message' => \Drupal::state()
-              ->get('age_checker_' . $language_code . '_blank_error_msg', ''),
-            'dateformat_error' => \Drupal::state()
-              ->get('age_checker_' . $language_code . '_dateformat_error_msg', ''),
-            'under_age_err_msg' => \Drupal::state()
-              ->get('age_checker_' . $language_code . '_underage_error_msg', ''),
-            'date_range_err_msg' => \Drupal::state()
-              ->get('age_checker_' . $language_code . '_daterange_error_msg', ''),
+            'threshold_age' => \Drupal::state()->get('age_checker_' . $selected_country . '_threshold_ages'),
+            'redirecturl' => \Drupal::state()->get('age_checker_under_age_url', '/'),
+            'blank_err_message' => \Drupal::state()->get('age_checker_' . $language_code . '_blank_error_msg', ''),
+            'dateformat_error' => \Drupal::state()->get('age_checker_' . $language_code . '_dateformat_error_msg', ''),
+            'under_age_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_underage_error_msg', '') ? \Drupal::state()->get('age_checker_' . $language_code . '_underage_error_msg', '') : $default_settings->get('age_checker_underage_error_msg'),
+            'date_range_err_msg' => \Drupal::state()->get('age_checker_' . $language_code . '_daterange_error_msg', ''),
             'destination' => $destination,
             // 'verify' => $verify,
-            'day_placeholder' => \Drupal::state()
-              ->get('age_checker_' . $selected_country . '_day_placeholder'),
-            'month_placeholder' => \Drupal::state()
-              ->get('age_checker_' . $selected_country . '_month_placeholder'),
-            'year_placeholder' => \Drupal::state()
-              ->get('age_checker_' . $selected_country . '_year_placeholder'),
+            'day_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_day_placeholder'),
+            'month_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_month_placeholder'),
+            'year_placeholder' => \Drupal::state()->get('age_checker_' . $selected_country . '_year_placeholder'),
             'id_1' => $id[0],
             'id_2' => $id[1],
             'id_3' => $id[2],
