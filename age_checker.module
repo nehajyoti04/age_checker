@@ -72,7 +72,6 @@ function age_checker_theme_suggestions_page_alter(array &$suggestions, array $va
  * Implements hook_page_attachments().
  */
 function age_checker_page_attachments(array &$attachments) {
-
   $attachments['#attached']['library'][] = 'age_checker/age_checker.admin';
 
   $user = \Drupal::currentUser();
@@ -93,7 +92,7 @@ function age_checker_page_attachments(array &$attachments) {
     setcookie('age_checker', 1, 0, $GLOBALS['base_path'], NULL, FALSE, TRUE);
   }
 
-  if (($age_gate_cookie != 1) && ($remember_me_cookie != 1)) {
+  if ((($age_gate_cookie != 1) && ($remember_me_cookie != 1)) || $current_path == '/age-gate') {
     if (AgeCheckerSubscriber::age_checker_show_age_gate()) {
       $visibility = \Drupal::state()
         ->get('age_checker_visibility', AGE_CHECKER_VISIBILITY_NOTLISTED);
@@ -136,7 +135,7 @@ function age_checker_page_attachments(array &$attachments) {
           // Default country.
           $selected_country = isset($_COOKIE['country_selected']) ? $_COOKIE['country_selected'] : age_checker_get_country_name();
 
-          if ($destination == '/age-gate' || $destination == 'node' || $is_front || (($current_path == '/age-gate') && ($destination == ''))) {
+          if ($destination == '/age-gate' || $destination == '/node' || $is_front || (($current_path == '/age-gate') && ($destination == ''))) {
             if (\Drupal::moduleHandler()->moduleExists('locale')) {
               $destination = \Drupal::state()
                 ->get('age_checker_' . $selected_country . '_redirect_link');
