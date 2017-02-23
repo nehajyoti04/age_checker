@@ -1,28 +1,36 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\age_checker\Form\CountryConfig.
- */
-
 namespace Drupal\age_checker\Form;
 
-use Drupal\Core\Datetime\Date;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
+/**
+ * Class CountryConfig.
+ *
+ * @package Drupal\age_checker\Form
+ */
 class CountryConfig extends ConfigFormBase {
 
+  /**
+   * {@inheritdoc}
+   */
   public function getFormId() {
     return 'age_checker_country_settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getEditableConfigNames() {
     return [
       'age_checker_country.settings',
     ];
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $config = $this->config('age_checker_country.settings');
@@ -33,9 +41,9 @@ class CountryConfig extends ConfigFormBase {
     $countries = \Drupal::state()->get('age_checker_countries', '') ? \Drupal::state()->get('age_checker_countries', '') : $default_settings->get('age_checker_countries');
     $countries = explode("\n", $countries);
     foreach ($countries as $country) {
-      if(isset($country)) {
+      if (isset($country)) {
         $country_array = explode('|', $country);
-        if(isset($country_array[1])) {
+        if (isset($country_array[1])) {
           $country_options[$country_array[0]] = $country_array[1];
         }
       }
@@ -198,9 +206,6 @@ class CountryConfig extends ConfigFormBase {
 
   /**
    * Implements hook_form_submit().
-   *
-   * @param array $form
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Set values in variables.
@@ -235,4 +240,5 @@ class CountryConfig extends ConfigFormBase {
     }
     parent::submitForm($form, $form_state);
   }
+
 }

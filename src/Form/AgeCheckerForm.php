@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains Drupal\age_checker\Form\AgeChecker.
- */
 
 namespace Drupal\age_checker\Form;
 
@@ -22,10 +18,13 @@ class AgeCheckerForm extends FormBase {
     return 'age_checker_form';
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = array();
     // Getting the langauge_code.
-    $language_code = AgeCheckerAgeGate::age_checker_get_language_code();
+    $language_code = AgeCheckerAgeGate::ageCheckerGetLanguageCode();
 
     // Default Country.
     $selected_country = isset($_COOKIE['country_selected']) ? $_COOKIE['country_selected'] : age_checker_get_country_name();
@@ -139,4 +138,5 @@ class AgeCheckerForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
   }
+
 }

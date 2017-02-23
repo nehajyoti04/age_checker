@@ -1,16 +1,15 @@
 /**
- * @file age_checker.js
- *
+ * @file
  * Provides client-side validations for the Age Gate.
  */
 
 var age_checker = {};
 
-(function($) {
+(function ($) {
   'use strict';
   Drupal.behaviors.age_checker = {
-    attach: function(context, settings) {
-      $(document).ready(function() {
+    attach: function (context, settings) {
+      $(document).ready(function () {
 
         var agegate_bg = $('.age-checker-bg img').attr('src');
         $('#age_checker').css('background-image', 'url(' + agegate_bg + ')');
@@ -24,19 +23,19 @@ var age_checker = {};
           var id2 = drupalSettings.age_checker.id_2;
           var id3 = drupalSettings.age_checker.id_3;
 
-          $(id1).keyup(function() {
+          $(id1).keyup(function () {
             if (this.value.length === this.maxLength) {
               $(id2).focus();
             }
           });
-          $(id2).keyup(function() {
+          $(id2).keyup(function () {
             if (this.value.length === this.maxLength) {
               $(id3).focus();
             }
           });
         }
 
-        $('#age_checker_country').change(function() {
+        $('#age_checker_country').change(function () {
           var selected_country = $(this).find('option:selected').val();
           var cookie_name = "country_selected=" + selected_country + "; path=/";
           document.cookie = cookie_name;
@@ -45,7 +44,7 @@ var age_checker = {};
       });
 
       // Function to verify the age limits.
-      age_checker.verify = function() {
+      age_checker.verify = function () {
 
         var now = new Date(drupalSettings.age_checker.currentdate);
         var date = now.getDate();
@@ -70,7 +69,8 @@ var age_checker = {};
 
         if (age_checker_month > month) {
           age--;
-        } else {
+        }
+        else {
           if (age_checker_month === month && age_checker_day > date) {
             age--;
           }
@@ -84,35 +84,45 @@ var age_checker = {};
           (age_checker_year === year_placeholder)) {
           document.getElementById('age_checker_error_message').innerHTML = Drupal.t(blank_err_message);
           return false;
-        } else if ((age_checker_year < 1900) || (age_checker_year > year)) {
+        }
+        else if ((age_checker_year < 1900) || (age_checker_year > year)) {
           document.getElementById('age_checker_error_message').innerHTML = Drupal.t(date_range_err_msg);
           return false;
-        } else if (age_checker_year.length !== 4) {
+        }
+        else if (age_checker_year.length !== 4) {
           document.getElementById('age_checker_error_message').innerHTML = Drupal.t(dateformat_error);
           return false;
-        } else if ((age_checker_month < 1 || age_checker_month > 12)) {
+        }
+        else if ((age_checker_month < 1 || age_checker_month > 12)) {
           document.getElementById('age_checker_error_message').innerHTML = Drupal.t(dateformat_error);
           return false;
-        } else if (age_checker_day < 1 || age_checker_day > 31) {
+        }
+        else if (age_checker_day < 1 || age_checker_day > 31) {
           document.getElementById('age_checker_error_message').innerHTML = Drupal.t(dateformat_error);
           return false;
-        } else if ((age_checker_month === 4 || age_checker_month === 6 || age_checker_month === 9 || age_checker_month === 11) && age_checker_day === 31) {
+        }
+        else if ((age_checker_month === 4 || age_checker_month === 6 || age_checker_month === 9 || age_checker_month === 11) && age_checker_day === 31) {
           document.getElementById('age_checker_error_message').innerHTML = Drupal.t(dateformat_error);
           return false;
-        } else if (age_checker_month === 2 && (age_checker_day === 29 && !leapyear || age_checker_day > 29)) {
+        }
+        else if (age_checker_month === 2 && (age_checker_day === 29 && !leapyear || age_checker_day > 29)) {
           // Check for february 29th.
           document.getElementById('age_checker_error_message').innerHTML = Drupal.t(dateformat_error);
           return false;
-        } else if (today - dobdate < 0) {
+        }
+        else if (today - dobdate < 0) {
           document.getElementById('age_checker_error_message').innerHTML = Drupal.t(date_range_err_msg);
           return false;
-        } else if (!parseInt(age_checker_month, 10) || !parseInt(age_checker_day, 10) || !parseInt(age_checker_year, 10)) {
+        }
+        else if (!parseInt(age_checker_month, 10) || !parseInt(age_checker_day, 10) || !parseInt(age_checker_year, 10)) {
           document.getElementById('age_checker_error_message').innerHTML = Drupal.t(dateformat_error);
           return false;
-        } else if (age < threshold_age) {
+        }
+        else if (age < threshold_age) {
           alert(drupalSettings.age_checker.under_age_err_msg);
           window.location = drupalSettings.age_checker.redirecturl;
-        } else {
+        }
+        else {
           var cookie_name = "age_checker=1; path=/;";
           document.cookie = cookie_name;
           if (remember_me === "1") {

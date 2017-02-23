@@ -4,6 +4,11 @@ namespace Drupal\age_checker\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 
+/**
+ * Class AgeCheckerAgeGate.
+ *
+ * @package Drupal\age_checker\Controller
+ */
 class AgeCheckerAgeGate extends ControllerBase {
 
   /**
@@ -12,7 +17,7 @@ class AgeCheckerAgeGate extends ControllerBase {
   public function ageCheckerTemplate() {
 
     // Getting the language Code.
-    $language_code = $this->age_checker_get_language_code();
+    $language_code = $this->ageCheckerGetLanguageCode();
 
     // Header text of the form.
     $age_checker_header_message_array = \Drupal::state()
@@ -37,7 +42,7 @@ class AgeCheckerAgeGate extends ControllerBase {
   /**
    * Getting the language_code on the basis of Country selected.
    */
-  public static function age_checker_get_language_code() {
+  public static function ageCheckerGetLanguageCode() {
 
     $languages_options = array();
     $countries_array = array();
@@ -54,7 +59,7 @@ class AgeCheckerAgeGate extends ControllerBase {
 
     foreach ($languages_options as $key => $value) {
       $countries_array = \Drupal::state()->get('age_checker_' . $key . '_country_list');
-      if(!empty($countries_array)) {
+      if (!empty($countries_array)) {
         foreach ($countries_array as $country) {
           if ($country == $selected_country) {
             return $key;
@@ -63,4 +68,5 @@ class AgeCheckerAgeGate extends ControllerBase {
       }
     }
   }
+
 }

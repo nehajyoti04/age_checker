@@ -1,29 +1,37 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\age_checker\Form\MappingAdminForm.
- */
-
 namespace Drupal\age_checker\Form;
 
-use Drupal\Core\Datetime\Date;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\Html;
 
+/**
+ * Class MappingAdminForm.
+ *
+ * @package Drupal\age_checker\Form
+ */
 class MappingAdminForm extends ConfigFormBase {
 
+  /**
+   * {@inheritdoc}
+   */
   public function getFormId() {
     return 'age_checker_mapping_settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getEditableConfigNames() {
     return [
       'age_checker_mapping.settings',
     ];
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $config = $this->config('age_checker_mapping.settings');
@@ -183,9 +191,6 @@ class MappingAdminForm extends ConfigFormBase {
 
   /**
    * Implements hook_form_submit().
-   *
-   * @param array $form
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
@@ -228,4 +233,5 @@ class MappingAdminForm extends ConfigFormBase {
     // Set values in variables.
     parent::submitForm($form, $form_state);
   }
+
 }

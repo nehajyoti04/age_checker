@@ -1,29 +1,37 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\age_checker\Form\SettingsForm.
- */
-
 namespace Drupal\age_checker\Form;
 
-use Drupal\Core\Datetime\Date;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
+/**
+ * Class SettingsForm.
+ *
+ * @package Drupal\age_checker\Form
+ */
 class SettingsForm extends ConfigFormBase {
 
+  /**
+   * {@inheritdoc}
+   */
   public function getFormId() {
     return 'age_checker_settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function getEditableConfigNames() {
     return [
       'age_checker.settings',
     ];
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $config = $this->config('age_checker.settings');
@@ -87,7 +95,7 @@ class SettingsForm extends ConfigFormBase {
       '#required' => TRUE,
       '#maxlength' => 255,
       '#default_value' => $config->get('age_checker_countries'),
-      '#description' => t('Please enter required country in localized language e.g. ES|España. The key should be picked up from A2 (ISO) column of ') . $link . t(' site depending on the value of the country.'),
+      '#description' => t('Please enter required country in localized language e.g. ES|España. The key should be picked up from A2 (ISO) column of %link site depending on the value of the country.', array('%link' => $link)),
     );
 
     // Verification options for age checker.
@@ -211,13 +219,9 @@ class SettingsForm extends ConfigFormBase {
 
   /**
    * Implements hook_form_submit().
-   *
-   * @param array $form
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // Set values in variables.
-
     $values = $form_state->getValues();
     \Drupal::state()->set('age_checker_option_remember_me', $values['age_checker_option_remember_me']);
     \Drupal::state()->set('age_checker_country_code_url', $values['age_checker_country_code_url']);
@@ -244,4 +248,5 @@ class SettingsForm extends ConfigFormBase {
       ->save();
     parent::submitForm($form, $form_state);
   }
+
 }

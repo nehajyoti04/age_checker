@@ -1,13 +1,8 @@
 <?php
-/**
- * @file
- * Contains \Drupal\age_checker\EventSubscriber.
- */
 
 namespace Drupal\age_checker\EventSubscriber;
 
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\Component\Utility\Unicode;
 
@@ -17,9 +12,9 @@ use Drupal\Component\Utility\Unicode;
 class AgeCheckerSubscriber implements EventSubscriberInterface {
 
   /**
-   *  The Event to process.
+   * The Event to process.
    */
-  public function AgeCheckerSubscriberLoad() {
+  public function ageCheckerSubscriberLoad() {
     $user = \Drupal::currentUser();
     $age_gate_cookie = isset($_COOKIE['age_checker']) ? $_COOKIE['age_checker'] : 0;
     $remember_me_cookie = isset($_COOKIE['remember_me']) ? $_COOKIE['remember_me'] : 0;
@@ -29,7 +24,7 @@ class AgeCheckerSubscriber implements EventSubscriberInterface {
     }
     else {
       if (($age_gate_cookie != 1) && ($remember_me_cookie != 1)) {
-        if ($this->age_checker_show_age_gate()) {
+        if ($this->ageCheckerShowAgeGate()) {
 
         }
       }
@@ -39,8 +34,8 @@ class AgeCheckerSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  static function getSubscribedEvents() {
-    $events[KernelEvents::REQUEST][] = array('AgeCheckerSubscriberLoad', 20);
+  public static function getSubscribedEvents() {
+    $events[KernelEvents::REQUEST][] = array('ageCheckerSubscriberLoad', 20);
     return $events;
   }
 
@@ -50,7 +45,7 @@ class AgeCheckerSubscriber implements EventSubscriberInterface {
    * @return bool
    *   True if must be shown
    */
-  public static function age_checker_show_age_gate() {
+  public static function ageCheckerShowAgeGate() {
     $visibility = \Drupal::state()->get('age_checker_visibility', AGE_CHECKER_VISIBILITY_NOTLISTED);
     $pages = \Drupal::state()->get('age_checker_pages');
     $current_path = \Drupal::service('path.current')->getPath();
@@ -76,4 +71,5 @@ class AgeCheckerSubscriber implements EventSubscriberInterface {
     }
     return FALSE;
   }
+
 }
